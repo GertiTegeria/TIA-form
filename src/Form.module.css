@@ -1,0 +1,39 @@
+.container {
+    padding: 58px 64px;
+}
+
+.logo {
+    width: 80px;
+    height: 45px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.h1black {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.h1red {
+    color: #DB0035;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+
+.h3red {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-top: 53px;
+    color: #DB0035;
+    margin-bottom: 32px;
+}
+    
