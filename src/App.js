@@ -3,6 +3,7 @@ import classes from "./Form.module.css";
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper";
 import ButtonStepper from "./components/ButtonStepper/ButtonStepper";
 import { useState } from "react";
+import Card from './components/Card/Card'
 
 
 const steps = [
@@ -35,6 +36,8 @@ function App() {
 
   return (
     <div className={classes.container}>
+      <Card>
+
       <div className={classes.header}>
         <img src={logo} alt="logo" className={classes.logo} />
         <h1>
@@ -59,8 +62,6 @@ function App() {
         {activeStep === 6 && <div>Cover Letter Form</div>}
         {activeStep === 7 && <div>Additional Questions Form</div>}
       </div>
-      <div style={{ marginTop: "38px" }}>
-
       <ButtonStepper 
         activeStep={activeStep}
         stepsLength={steps.length}
@@ -68,7 +69,7 @@ function App() {
         onBack={handleBack}
         onReset={handleReset}
       />
-      </div>
+      </Card>
     </div>
   );
 }
