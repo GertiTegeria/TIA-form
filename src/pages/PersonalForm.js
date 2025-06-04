@@ -12,6 +12,7 @@ import {
   civilStatusOptions,
 } from "../DummyData/DUMMYDATA";
 import PhotoUploadExample from "../components/UploadPic/UploadPic";
+import DateInputDemo from "../components/Input/Date/Date";
 
 export default function PersonalForm() {
 
@@ -35,13 +36,7 @@ export default function PersonalForm() {
           value={emriMbiemri}
           onChange={(e) => setEmriMbiemri(e.target.value)}
         />
-        <CustomTextInput
-          name="name"
-          label="FSHN- Fakulteti i Shkencave te Natyres"
-          topLabel="Vendndodhja e institutit "
-          value={vendndodhja}
-          onChange={(e) => setVendndodhja(e.target.value)}
-        />
+        <DateInputDemo/>
       </div>
       <div className={classes.firstGroup}>
         <CustomSelecter
