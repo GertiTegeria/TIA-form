@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import PersonPhoto from "../../assets/photo.jpeg";
 import classes from "./Finished.module.css";
+import { flexDirection } from "@mui/system";
 
 const styles = {
   container: {
@@ -25,6 +26,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     flexWrap: "wrap",
+    gap: "35px",
   },
   column: {
     display: "flex",
@@ -61,11 +63,18 @@ const styles = {
     height: 53,
   },
 
-  fieldGroup: {
+  fieldGroupLabel: {
     display: "flex",
-    gap: "30px",
-    alignItems: "baseline",
+    flexDirection: "column",
+    gap: "12px",
   },
+
+  fieldGroupValue: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+  },
+
   label: {
     fontWeight: "600",
     minWidth: "65px",
@@ -154,41 +163,46 @@ const FinishedAplication = () => {
             className={classes.photoPlaceholder}
           />
           <div style={styles.row}>
-            <div style={styles.column}>
-              <div style={styles.fieldGroup}>
+            <div style={styles.row}>
+              <div style={styles.fieldGroupLabel}>
                 <span style={styles.label}>Emri dhe Mbiemri:</span>
-                <span style={styles.value}>John Doe</span>
-              </div>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Statusi Civil:</span>
-                <span style={styles.value}>I martuar</span>
-              </div>
-              <div style={styles.fieldGroup}>
+              
                 <span style={styles.label}>Datëlindja:</span>
-                <span style={styles.value}>09/12/89</span>
+                <span style={styles.label}>Vendlindja:</span>
+                <span style={styles.label}>Gjinia:</span>
+              
+             
               </div>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Adresa:</span>
-                <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
+              <div style={styles.fieldGroupValue}>
+                <span style={styles.value}>John Doe</span>
+           
+                <span style={styles.value}>09/12/89</span>
+            
+                <span style={styles.value}>Tirana</span>
+
+                <span style={styles.value}>Mashkull</span>
+           
               </div>
             </div>
-            <div style={styles.column}>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Vendlindja:</span>
-                <span style={styles.value}>Tirana</span>
-              </div>
-
-              <div style={styles.fieldGroup}>
+            <div style={styles.row}>
+              <div style={styles.fieldGroupLabel}>
+               
+                <span style={styles.label}>Statusi Civil:</span>
+           
+                <span style={styles.label}>Adresa:</span>
+            
                 <span style={styles.label}>Telefon / Celular:</span>
-                <span style={styles.value}>+355 123 456 7891</span>
-              </div>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Gjinia:</span>
-                <span style={styles.value}>Mashkull</span>
-              </div>
-
-              <div style={styles.fieldGroup}>
+           
                 <span style={styles.label}>E-mail:</span>
+              </div>
+              <div style={styles.fieldGroupValue}>
+               
+                <span style={styles.value}>I martuar</span>
+              
+                <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
+                
+                <span style={styles.value}>+355 123 456 7891</span>
+                
                 <span style={styles.value}>john.doe@email.com</span>
               </div>
             </div>
