@@ -1,31 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./Button.module.css";
 import chevron from "../../assets/chevron-down.png";
 import chevronUp from "../../assets/chevron-down (1).png";
+import { useNavigate } from "react-router-dom";
 
 export default function ButtonStepper({
   activeStep,
   stepsLength,
   onNext,
   onBack,
-  onReset,
 }) {
   const isLastStep = activeStep === stepsLength - 1;
   const isFirstStep = activeStep === 0;
   const isCompleted = activeStep === stepsLength;
 
-  if (isCompleted) {
-    return (
-      <div className={classes.wrapper}>
-        <div className={classes.completedMessage}>
-          All steps completed - you're finished
-        </div>
-        <button className={classes.resetBtn} onClick={onReset}>
-          Reset
-        </button>
-      </div>
-    );
-  }
+ 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isCompleted) {
+      localStorage.setItem("activeStep", stepsLength); 
+      navigate("/FinishedAplication");
+    }
+  }, [isCompleted, navigate, stepsLength]);
+
+  if (isCompleted) return null;
 
   return (
     <div className={classes.wrapper}>

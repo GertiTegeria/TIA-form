@@ -13,6 +13,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 28px;
 }
 
 .h1black {
@@ -29,21 +30,20 @@
     line-height: 28px;
 }
 
-
-.h3red {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    margin-top: 53px;
-    color: #DB0035;
-    margin-bottom: 32px;
-}
-    
 .divider {
     width: 100%;
     height: 1px;
     background-color: #EDEAEA;
-    margin-top: 32px;
-    margin-bottom: 32px;
+    margin-top: 12px;
+    margin-bottom: 24px;
 }
-    
+
+
+
+.photoPlaceholder {
+    width: 111px;
+    height: 111px;
+    border-radius: 2px;
+    object-fit: cover;
+    object-position: center;
+}

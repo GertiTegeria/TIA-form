@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './HomePage.module.css';
 import HomePageImage from '../../assets/HomePage.jpg'
 import { useNavigate } from 'react-router-dom';
+import files from '../../assets/files.svg'
 
 const HomePage = () => {
   const jobPositions = [
@@ -24,20 +25,16 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Content Section */}
       <div className={styles.contentSection}>
         <div className={styles.contentContainer}>
           <h2 className={styles.mainTitle}>Join Our Team – Application Procedure</h2>
           <p className={styles.subtitle}>We look forward to welcoming new talent to our team!</p>
           
-          {/* Job Listings */}
           <div  className={styles.jobListings}>
             {jobPositions.map((job) => (
               <div onClick={() => navigate('/JobDetails')} key={job.id} className={styles.jobItem}>
                 <div className={styles.jobIcon}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6C5.45 2 5 2.45 5 3V21L12 18L19 21V3C19 2.45 18.55 2 18 2H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <img src={files} alt="files" />
                 </div>
                 <span className={styles.jobTitle}>{job.title}</span>
                 <div className={styles.jobArrow}>

@@ -5,6 +5,7 @@
 }
 .firstGroup {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     width: 100%;
     justify-content: space-between;
@@ -21,4 +22,11 @@
     margin-top: 18px;
     color: #DB0035;
     margin-bottom: 18px;
+}
+
+
+@media (max-width: 670px) {
+ .firstGroup{
+    flex-direction: column;
+ }  
 }

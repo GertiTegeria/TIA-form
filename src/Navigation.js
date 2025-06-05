@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/Home/HomePage'
-import Form from './pages/Form/Form'
+import ApplicationForm from './pages/ApplicationForm/ApplicationForm'
 import JobDetails from './pages/JobDetails/JobDetails'
+import FinishedAplication from './pages/FinishedAplication/FinishedAplication'
 
 
 export default function Router() {
@@ -11,12 +12,16 @@ export default function Router() {
             element: <HomePage />,
         },
           {
-            path: '/Form',
-            element: < Form/>
+            path: '/ApplicationForm',
+            element: < ApplicationForm/>
         },
         {
             path: '/JobDetails',
             element: <JobDetails />
+        },
+        {
+            path: '/FinishedAplication',
+            element: <FinishedAplication />
         },
 
     ])

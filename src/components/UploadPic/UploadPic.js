@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import ArrowUp from "../../assets/arrowUp.png";
 import UploadIcon from "../../assets/uploadPic.png";
 import RecycleIcon from "../../assets/recycle.png";
-import EditIcon from "../../assets/edit.png";
 
 const PhotoUpload = ({
   onFileSelect,
@@ -75,12 +74,12 @@ const PhotoUpload = ({
               border: "none",
               padding: "12px 24px",
               fontSize: "16px",
-              cursor: disabled ? "not-allowed" : "pointer",
+              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              opacity: disabled ? 0.6 : 1,
+              
             }}
             // onMouseEnter={(e) => {
             //   if (!disabled) {
@@ -133,22 +132,6 @@ const PhotoUpload = ({
                 alignItems: "center",
               }}
             >
-              <button
-                type="button"
-                onClick={handleClick}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "4px",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img src={EditIcon} alt="edit-icon" />
-              </button>
 
               <button
                 type="button"

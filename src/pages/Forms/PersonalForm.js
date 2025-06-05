@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import CustomTextInput from "../components/Input/Text/TextInput";
+import CustomTextInput from "../../components/Input/Text/TextInput";
 import classes from "./Personal.module.css";
-import CustomSelecter from "../components/Input/Autocomplete/Autocomplete";
-import locationIcon from "../assets/location.png";
-import emailIcon from "../assets/email.svg";
-import PhoneInputDemo from "../components/Input/Phone/PhoneInput";
-import CustomRadioButton from "../components/Input/RadioButton/RadioButton";
+import CustomSelecter from "../../components/Input/Autocomplete/Autocomplete";
+import locationIcon from "../../assets/location.png";
+import emailIcon from "../../assets/email.svg";
+import PhoneInputDemo from "../../components/Input/Phone/PhoneInput";
+import CustomRadioButton from "../../components/Input/RadioButton/RadioButton";
 import {
   options,
   genderOptions,
   civilStatusOptions,
-} from "../DummyData/DUMMYDATA";
-import PhotoUploadExample from "../components/UploadPic/UploadPic";
-import DateInputDemo from "../components/Input/Date/Date";
+} from "../../DummyData/DUMMYDATA";
+import PhotoUploadExample from "../../components/UploadPic/UploadPic";
+import DateInputDemo from "../../components/Input/Date/Date";
 
 export default function PersonalForm() {
-
-    const [emriMbiemri, setEmriMbiemri] = useState("");
-    const [vendndodhja, setVendndodhja] = useState("");
-    const [vendlindja, setVendlindja] = useState("");
-    const [gjinia, setGjinia] = useState("");
-    const [statusiCivil, setStatusiCivil] = useState("");
-    const [adresa, setAdresa] = useState("");
-    const [telefon, setTelefon] = useState("");
-    const [email, setEmail] = useState("");
-    const [interesiPërPunë, setInteresiPërPunë] = useState("");
+  const [emriMbiemri, setEmriMbiemri] = useState("");
+  const [vendlindja, setVendlindja] = useState("");
+  const [gjinia, setGjinia] = useState("");
+  const [statusiCivil, setStatusiCivil] = useState("");
+  const [adresa, setAdresa] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [email, setEmail] = useState("");
+  const [interesiPërPunë, setInteresiPërPunë] = useState("");
+  const [date, setDate] = useState("");
 
   return (
     <div className={classes.personalForm}>
@@ -36,7 +35,7 @@ export default function PersonalForm() {
           value={emriMbiemri}
           onChange={(e) => setEmriMbiemri(e.target.value)}
         />
-        <DateInputDemo/>
+        <DateInputDemo onChange={(e) => setDate(e.target.value)} value={date}/>
       </div>
       <div className={classes.firstGroup}>
         <CustomSelecter
@@ -85,7 +84,10 @@ export default function PersonalForm() {
         />
       </div>
       <div className={classes.firstGroup}>
-        <PhoneInputDemo onChange={(e) => setTelefon(e.target.value)} value={telefon}/>
+        <PhoneInputDemo
+          onChange={(e) => setTelefon(e.target.value)}
+          value={telefon}
+        />
         <CustomTextInput
           name="name"
           label="E-mail"
@@ -102,10 +104,7 @@ export default function PersonalForm() {
           iconPosition="end"
         />
       </div>
-     
-       
-
-          <PhotoUploadExample />
+      <PhotoUploadExample />
       <h3 className={classes.h3red}>Interesi për punë</h3>
       <div className={classes.firstGroup}>
         <div style={{ flex: 1 }}>

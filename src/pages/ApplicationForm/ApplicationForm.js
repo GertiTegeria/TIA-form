@@ -1,27 +1,39 @@
-import logo from "../../logo.png";
-import classes from "./Form.module.css";
+import logo from "../../assets/logo.png";
+import classes from "./AplicationForm.module.css";
 import HorizontalLinearStepper from "../../components/Stepper/HorizontalLinearStepper";
 import ButtonStepper from "../../components/ButtonStepper/ButtonStepper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
-import PersonalForm from "../PersonalForm";
+import PersonalForm from "../Forms/PersonalForm";
 import { steps } from "../../DummyData/DUMMYDATA";
 
-function Form() {
+function ApplicationForm() {
   const [activeStep, setActiveStep] = useState(0);
 
+  useEffect(() => {
+    const savedStep = localStorage.getItem("activeStep");
+    if (savedStep !== null) {
+      setActiveStep(parseInt(savedStep));
+    }
+  }, []);
+
+
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prev) => {
+      const nextStep = prev + 1;
+      localStorage.setItem("activeStep", nextStep);
+      return nextStep;
+    });
   };
-
+  
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prev) => {
+      const prevStep = prev - 1;
+      localStorage.setItem("activeStep", prevStep);
+      return prevStep;
+    });
   };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
+  
   return (
     <div className={classes.container}>
       <Card>
@@ -32,10 +44,10 @@ function Form() {
           </h1>
           <img src={logo} alt="logo" className={classes.logo} />
         </div>
-        <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
-
+        <div className={classes.hideSteper}>
+          <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
+        </div>
         <h3 className={classes.h3red}>{steps[activeStep]}</h3>
-
         <div className={classes.formContent}>
           {activeStep === 0 && <PersonalForm />}
           {activeStep === 1 && <div>Education Form</div>}
@@ -52,11 +64,10 @@ function Form() {
           stepsLength={steps.length}
           onNext={handleNext}
           onBack={handleBack}
-          onReset={handleReset}
         />
       </Card>
     </div>
   );
 }
 
-export default Form;
+export default ApplicationForm;

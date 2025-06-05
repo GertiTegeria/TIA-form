@@ -74,9 +74,6 @@ const GlobalStyle = () => (
   </style>
 );
 
-const CalendarIcon = () => (
-  <img src={calendarIcon} alt="calendar icon"/>
-);
 
 const CustomDateInput = ({
   name,
@@ -128,7 +125,7 @@ const CustomDateInput = ({
           autoComplete="off"
         />
         <span style={classes.icon} onClick={handleIconClick}>
-          <CalendarIcon />
+          <img src={calendarIcon} alt="calendar icon"/>
         </span>
       </div>
 
@@ -137,31 +134,31 @@ const CustomDateInput = ({
   );
 };
 
-const DateInputDemo = () => {
-  const [dateValue, setDateValue] = React.useState('');
-  const [errorState, setErrorState] = React.useState(false);
+const DateInputDemo = ({onChange, value}) => {
+  // const [dateValue, setDateValue] = React.useState('');
+  // const [errorState, setErrorState] = React.useState(false);
 
-  const handleDateChange = (e) => {
-    const val = e.target.value;
-    setDateValue(val);
-    if (val) {
-      const selectedDate = new Date(val);
-      const today = new Date();
-      setErrorState(selectedDate > today);
-    } else {
-      setErrorState(false);
-    }
-  };
+  // const handleDateChange = (e) => {
+  //   const val = e.target.value;
+  //   setDateValue(val);
+  //   if (val) {
+  //     const selectedDate = new Date(val);
+  //     const today = new Date();
+  //     setErrorState(selectedDate > today);
+  //   } else {
+  //     setErrorState(false);
+  //   }
+  // };
 
   return (
     <CustomDateInput
       name="birthDate"
       topLabel="Datëlindja"
-      value={dateValue}
-      onChange={handleDateChange}
+      value={value}
+      onChange={onChange}
       placeholder="dd/mm/yyyy"
-      error={errorState}
-      helperText={errorState ? "Data nuk mund të jetë në të ardhmen." : ""}
+      // error={errorState}
+      // helperText={errorState ? "Data nuk mund të jetë në të ardhmen." : ""}
     />
   );
 };
