@@ -2,38 +2,50 @@ import logo from "../../assets/logo.png";
 import classes from "./AplicationForm.module.css";
 import HorizontalLinearStepper from "../../components/Stepper/HorizontalLinearStepper";
 import ButtonStepper from "../../components/ButtonStepper/ButtonStepper";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "../../components/Card/Card";
-import PersonalForm from "../Forms/PersonalForm";
+import PersonalForm from "../FormsSteps/PersonalForm";
 import { steps } from "../../DummyData/DUMMYDATA";
+import FinishedAplication from "../FinishedAplication/FinishedAplication";
 
 function ApplicationForm() {
   const [activeStep, setActiveStep] = useState(0);
 
-  useEffect(() => {
-    const savedStep = localStorage.getItem("activeStep");
-    if (savedStep !== null) {
-      setActiveStep(parseInt(savedStep));
-    }
-  }, []);
+  const [formData, setFormData] = useState({
+    emriMbiemri: "",
+    vendlindja: "",
+    gjinia: "",
+    statusiCivil: "",
+    adresa: "",
+    telefon: "",
+    email: "",
+    date: "",
+    pozicioni: "", 
+    mundësiaPunë: "", 
+  });
 
+  const updateFormData = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const handleNext = () => {
-    setActiveStep((prev) => {
-      const nextStep = prev + 1;
-      localStorage.setItem("activeStep", nextStep);
-      return nextStep;
-    });
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-  
+
   const handleBack = () => {
-    setActiveStep((prev) => {
-      const prevStep = prev - 1;
-      localStorage.setItem("activeStep", prevStep);
-      return prevStep;
-    });
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  
+
+  const handleSubmit = () => {
+    // Add your form submission logic here
+    console.log("Application submitted!");
+    // You can add API call, navigation, or other submission logic here
+    alert("Application submitted successfully!");
+  };
+
   return (
     <div className={classes.container}>
       <Card>
@@ -44,12 +56,17 @@ function ApplicationForm() {
           </h1>
           <img src={logo} alt="logo" className={classes.logo} />
         </div>
-        <div className={classes.hideSteper}>
-          <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
-        </div>
+        {activeStep < 8 && (
+          <div className={classes.hideSteper}>
+            <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
+          </div>
+        )}
+
         <h3 className={classes.h3red}>{steps[activeStep]}</h3>
         <div className={classes.formContent}>
-          {activeStep === 0 && <PersonalForm />}
+          {activeStep === 0 && (
+            <PersonalForm formData={formData} updateFormData={updateFormData} />
+          )}
           {activeStep === 1 && <div>Education Form</div>}
           {activeStep === 2 && <div>Work Experience Form</div>}
           {activeStep === 3 && <div>Professional Training Form</div>}
@@ -57,14 +74,22 @@ function ApplicationForm() {
           {activeStep === 5 && <div>Foreign Languages Form</div>}
           {activeStep === 6 && <div>Cover Letter Form</div>}
           {activeStep === 7 && <div>Additional Questions Form</div>}
+          {activeStep === 8 && (
+            <FinishedAplication onBack={handleBack} onSubmit={handleSubmit} />
+          )}
         </div>
-        <div className={classes.divider}></div>
-        <ButtonStepper
-          activeStep={activeStep}
-          stepsLength={steps.length}
-          onNext={handleNext}
-          onBack={handleBack}
-        />
+        {/* {activeStep === 0 && 8 ? '' :<div className={classes.divider}></div>} */}
+        {activeStep < 8 && (
+          <>
+            <div className={classes.divider}></div>
+            <ButtonStepper
+              activeStep={activeStep}
+              stepsLength={steps.length}
+              onNext={handleNext}
+              onBack={handleBack}
+            />
+          </>
+        )}
       </Card>
     </div>
   );

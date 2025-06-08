@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
 const styles = {
   radioWrapper: {
@@ -21,37 +21,36 @@ const styles = {
   },
 
   radioOption: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 16px',
-    border: '1px solid #B5B5B5',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    backgroundColor: 'white',
-    minWidth: '120px',
-    flex: '1',
-    height: '52px',
-    gap: '8px',
+    display: "flex",
+    alignItems: "center",
+    padding: "0 16px",
+    border: "1px solid #B5B5B5",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    backgroundColor: "white",
+    minWidth: "120px",
+    flex: "1",
+    height: "52px",
+    gap: "8px",
   },
 
   radioInput: {
-    appearance: 'none',
-    width: '14px',
-    height: '14px',
-    borderRadius: '50%',
-    position: 'relative',
-    backgroundColor: 'white',
-    display: 'inline-block',
-    border: '1px solid #B5B5B5',
-    transition: 'all 0.2s ease',
+    appearance: "none",
+    width: "14px",
+    height: "14px",
+    borderRadius: "50%",
+    position: "relative",
+    backgroundColor: "white",
+    display: "inline-block",
+    border: "1px solid #B5B5B5",
+    transition: "all 0.2s ease",
   },
-  
+
   radioInputSelected: {
-    backgroundColor: '#DB0035', 
-    boxShadow: '0 0 0 2px white, 0 0 0 3px #DB0035',
-    border: 'none',
+    backgroundColor: "#DB0035",
+    boxShadow: "0 0 0 2px white, 0 0 0 3px #DB0035",
+    border: "none",
   },
-  
 
   radioLabel: {
     fontSize: "12px",
@@ -77,11 +76,17 @@ const CustomRadioButton = ({
   value,
   onChange,
   topLabel,
-  error,
-  helperText,
+  // helperText,
   disabled = false,
 }) => {
-  const [hoveredOption, setHoveredOption] = useState(null);
+  // const [hoveredOption, setHoveredOption] = useState(null);
+  // const [selectedOption, setSelectedOption] = useState("kohe_plote");
+  // const [error, setError] = useState("");
+
+  // const handleRadioChange = (e) => {
+  //   setSelectedOption(e.target.value);
+  //   setError("");
+  // };
 
   const handleOptionClick = (optionValue) => {
     if (disabled) return;
@@ -98,12 +103,12 @@ const CustomRadioButton = ({
 
   const getRadioOptionStyle = (optionValue) => {
     const isSelected = value === optionValue;
-    const isHovered = hoveredOption === optionValue;
+    // const isHovered = hoveredOption === optionValue;
 
     return {
       ...styles.radioOption,
       ...(isSelected ? styles.radioOptionSelected : {}),
-      ...(isHovered && !isSelected ? styles.radioOptionHover : {}),
+      // ...(isHovered && !isSelected ? styles.radioOptionHover : {}),
       ...(disabled ? { opacity: 0.6, cursor: "not-allowed" } : {}),
     };
   };
@@ -118,27 +123,10 @@ const CustomRadioButton = ({
     };
   };
 
-//   const RadioDot = ({ isSelected }) => (
-//     <div
-//       style={{
-//         position: 'absolute',
-//         width: '8px',
-//         height: '8px',
-//         borderRadius: '50%',
-//         backgroundColor: '#DB0035',
-//         opacity: isSelected ? 1 : 0,
-//         transition: 'opacity 0.2s ease',
-//         top: '50%',
-//         left: '50%',
-//         transform: 'translate(-50%, -50%)',
-//       }}
-//     />
-//   );
-
-  const helperTextStyle = {
-    ...styles.helperText,
-    ...(error ? styles.helperTextError : {}),
-  };
+  // const helperTextStyle = {
+  //   ...styles.helperText,
+  //   ...(error ? styles.helperTextError : {}),
+  // };
 
   return (
     <div style={styles.radioWrapper}>
@@ -150,8 +138,6 @@ const CustomRadioButton = ({
             key={option.value}
             style={getRadioOptionStyle(option.value)}
             onClick={() => handleOptionClick(option.value)}
-            onMouseEnter={() => setHoveredOption(option.value)}
-            onMouseLeave={() => setHoveredOption(null)}
           >
             <div
               style={{
@@ -168,10 +154,11 @@ const CustomRadioButton = ({
                 name={name}
                 value={option.value}
                 checked={value === option.value}
-                onChange={() => {}}
+                onChange={() => handleOptionClick(option.value)}
                 style={getRadioInputStyle(option.value)}
                 disabled={disabled}
               />
+
               {/* <RadioDot isSelected={value === option.value} /> */}
             </div>
 
@@ -180,37 +167,9 @@ const CustomRadioButton = ({
         ))}
       </div>
 
-      {helperText && <div style={helperTextStyle}>{helperText}</div>}
+      {/* {helperText && <div style={helperTextStyle}>{helperText}</div>} */}
     </div>
   );
 };
 
-const RadioButtonDemo = () => {
-  const [selectedOption, setSelectedOption] = useState("kohe_plote");
-  const [error, setError] = useState("");
-
-  const workTimeOptions = [
-    { value: "kohe_plote", label: "Kohë e plotë" },
-    { value: "kohe_pjesshme", label: "Kohë e pjesshme" },
-    { value: "turne", label: "Turne" },
-  ];
-
-  const handleRadioChange = (e) => {
-    setSelectedOption(e.target.value);
-    setError("");
-  };
-
-  return (
-    <CustomRadioButton
-      name="workTime"
-      options={workTimeOptions}
-      value={selectedOption}
-      onChange={handleRadioChange}
-      topLabel="Mundësia për të punuar:"
-      error={!!error}
-      helperText={error}
-    />
-  );
-};
-
-export default RadioButtonDemo;
+export default CustomRadioButton;

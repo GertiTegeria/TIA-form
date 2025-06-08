@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import CustomTextInput from "../../components/Input/Text/TextInput";
 import classes from "./Personal.module.css";
 import CustomSelecter from "../../components/Input/Autocomplete/Autocomplete";
@@ -10,21 +9,12 @@ import {
   options,
   genderOptions,
   civilStatusOptions,
+  workTimeOptions,
 } from "../../DummyData/DUMMYDATA";
-import PhotoUploadExample from "../../components/UploadPic/UploadPic";
+import PhotoUpload from "../../components/UploadPic/UploadPic";
 import DateInputDemo from "../../components/Input/Date/Date";
 
-export default function PersonalForm() {
-  const [emriMbiemri, setEmriMbiemri] = useState("");
-  const [vendlindja, setVendlindja] = useState("");
-  const [gjinia, setGjinia] = useState("");
-  const [statusiCivil, setStatusiCivil] = useState("");
-  const [adresa, setAdresa] = useState("");
-  const [telefon, setTelefon] = useState("");
-  const [email, setEmail] = useState("");
-  const [interesiPërPunë, setInteresiPërPunë] = useState("");
-  const [date, setDate] = useState("");
-
+export default function PersonalForm({ formData, updateFormData }) {
   return (
     <div className={classes.personalForm}>
       <div className={classes.firstGroup}>
@@ -32,10 +22,13 @@ export default function PersonalForm() {
           name="Emër dhe Mbiemër"
           label="Sheno emër dhe mbiemër"
           topLabel="Emër dhe Mbiemër"
-          value={emriMbiemri}
-          onChange={(e) => setEmriMbiemri(e.target.value)}
+          value={formData.emriMbiemri}
+          onChange={(e) => updateFormData("emriMbiemri", e.target.value)}
         />
-        <DateInputDemo onChange={(e) => setDate(e.target.value)} value={date}/>
+        <DateInputDemo
+          onChange={(e) => updateFormData("date", e.target.value)}
+          value={formData.date}
+        />
       </div>
       <div className={classes.firstGroup}>
         <CustomSelecter
@@ -44,8 +37,8 @@ export default function PersonalForm() {
           label="Selekto qytetin"
           name="select"
           topLabel=" Vendlindja"
-          value={vendlindja}
-          onChange={(value) => setVendlindja(value)}
+          value={formData.vendlindja}
+          onChange={(value) => updateFormData("vendlindja", value)}
         />
         <CustomSelecter
           width="100%"
@@ -53,8 +46,8 @@ export default function PersonalForm() {
           label="Selekto gjininë"
           name="select"
           topLabel=" Gjinia"
-          value={gjinia}
-          onChange={(value) => setGjinia(value)}
+          value={formData.gjinia}
+          onChange={(value) => updateFormData("gjinia", value)}
         />
       </div>
       <div className={classes.firstGroup}>
@@ -64,47 +57,42 @@ export default function PersonalForm() {
           label="Selekto statusin"
           name="select"
           topLabel=" Statusi civil"
-          value={statusiCivil}
-          onChange={(value) => setStatusiCivil(value)}
+          value={formData.statusiCivil}
+          onChange={(value) => updateFormData("statusiCivil", value)}
         />
         <CustomTextInput
           name="name"
           label="Rruga, qytetit"
           topLabel="Adresa"
-          value={adresa}
-          onChange={(e) => setAdresa(e.target.value)}
+          value={formData.adresa}
+          onChange={(e) => updateFormData("adresa", e.target.value)}
           icon={
-            <img
-              src={locationIcon}
-              alt="location"
-              style={{ width: 14, height: 14 }}
-            />
+            <img src={locationIcon} alt="location" className={classes.icon} />
           }
           iconPosition="end"
         />
       </div>
       <div className={classes.firstGroup}>
         <PhoneInputDemo
-          onChange={(e) => setTelefon(e.target.value)}
-          value={telefon}
+          onChange={(e) => updateFormData("telefon", e.target.value)}
+          value={formData.telefon}
         />
         <CustomTextInput
           name="name"
           label="E-mail"
           topLabel="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          icon={
-            <img
-              src={emailIcon}
-              alt="email"
-              style={{ width: 14, height: 14 }}
-            />
-          }
+          value={formData.email}
+          onChange={(e) => updateFormData("email", e.target.value)}
+          icon={<img src={emailIcon} alt="email" />}
           iconPosition="end"
         />
       </div>
-      <PhotoUploadExample />
+      <PhotoUpload
+        onFileSelect={(file) => updateFormData("photoFile", file)}
+        acceptedTypes="image/*,application/pdf"
+        maxSize={5 * 1024 * 1024}
+        value={formData.photoFile}
+      />
       <h3 className={classes.h3red}>Interesi për punë</h3>
       <div className={classes.firstGroup}>
         <div style={{ flex: 1 }}>
@@ -112,18 +100,18 @@ export default function PersonalForm() {
             name="name"
             topLabel="Pozicioni për të cilin aplikoj: "
             iconPosition="end"
-            value={interesiPërPunë}
-            onChange={(e) => setInteresiPërPunë(e.target.value)}
+            value={formData.interesiPërPunë}
+            onChange={(e) => updateFormData("interesiPërPunë", e.target.value)}
           />
         </div>
         <div style={{ flex: 1 }} />
       </div>
       <CustomRadioButton
-        name="radio"
-        options={options}
-        value={interesiPërPunë}
-        onChange={(e) => setInteresiPërPunë(e.target.value)}
-        topLabel="Interesi për punë"
+        name="mundësiaPunë"
+        options={workTimeOptions}
+        value={formData.mundësiaPunë}
+        onChange={(e) => updateFormData("mundësiaPunë", e.target.value)}
+        topLabel="Mundësia për punë"
       />
     </div>
   );

@@ -19,10 +19,7 @@ export default function Router() {
             path: '/JobDetails',
             element: <JobDetails />
         },
-        {
-            path: '/FinishedAplication',
-            element: <FinishedAplication />
-        },
+      
 
     ])
     return <RouterProvider router={router} />

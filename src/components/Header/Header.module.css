@@ -1,0 +1,44 @@
+.logo {
+    width: 225px;
+    height: 53px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.h1black {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.h1red {
+    color: #DB0035;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+@media (max-width: 590px) {
+    .hideSteper{
+       display: none;
+    }  
+    .logo{
+        width: 150px;
+        height: 35px;
+    }
+   }
+    
+
+   @media (max-width: 480px) {
+    .header{
+        flex-direction: column-reverse;
+
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+    }
+   }

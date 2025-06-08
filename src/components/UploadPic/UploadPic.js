@@ -1,38 +1,43 @@
-import React, { useState, useRef } from "react";
+import { useRef } from "react";
 import ArrowUp from "../../assets/arrowUp.png";
 import UploadIcon from "../../assets/uploadPic.png";
 import RecycleIcon from "../../assets/recycle.png";
 
 const PhotoUpload = ({
   onFileSelect,
-  acceptedTypes = "image/*",
-  maxSize = 5 * 1024 * 1024,
+  acceptedTypes,
+  maxSize,
   disabled = false,
+  value,
 }) => {
-  const [uploadedFile, setUploadedFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileSelect = (files) => {
     const file = files[0];
     if (file) {
-      if (!file.type.startsWith("image/")) {
-        alert("Ju lutem zgjidhni një fotografi të vlefshme.");
+      const allowedTypes = acceptedTypes.split(",").map((t) => t.trim());
+      const isAllowed = allowedTypes.some((type) => {
+        if (type === "image/*") {
+          return file.type.startsWith("image/");
+        }
+        return file.type === type;
+      });
+
+      if (!isAllowed) {
+        alert("Ju lutem zgjidhni një imazh ose PDF të vlefshëm.");
         return;
       }
 
       if (file.size > maxSize) {
         alert(
-          `Madhësia e fotografisë duhet të jetë më e vogël se ${Math.round(
+          `Madhësia e skedarit duhet të jetë më e vogël se ${Math.round(
             maxSize / (1024 * 1024)
           )}MB.`
         );
         return;
       }
 
-      setUploadedFile(file);
-      if (onFileSelect) {
-        onFileSelect(file);
-      }
+      onFileSelect?.(file);
     }
   };
 
@@ -48,24 +53,14 @@ const PhotoUpload = ({
   };
 
   const removeFile = () => {
-    setUploadedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-    if (onFileSelect) {
-      onFileSelect(null);
-    }
+    fileInputRef.current.value = "";
+    onFileSelect?.(null);
   };
 
   return (
     <div style={{ width: "100%", alignItems: "start" }}>
-      {!uploadedFile ? (
-        <div
-          onClick={handleClick}
-          style={{
-            alignItems: "start",
-          }}
-        >
+      {!value ? (
+        <div onClick={handleClick}>
           <button
             type="button"
             style={{
@@ -78,19 +73,9 @@ const PhotoUpload = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              fontFamily: "Open Sans",
               gap: "8px",
-              
             }}
-            // onMouseEnter={(e) => {
-            //   if (!disabled) {
-            //     e.target.style.backgroundColor = '#c2185b';
-            //   }
-            // }}
-            // onMouseLeave={(e) => {
-            //   if (!disabled) {
-            //     e.target.style.backgroundColor = '#e91e63';
-            //   }
-            // }}
             disabled={disabled}
           >
             <img src={ArrowUp} alt="arrow-up" />
@@ -106,7 +91,7 @@ const PhotoUpload = ({
             maxWidth: "250px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "start", gap: "12px" }}>
+          <div >
             <div>
               <img src={UploadIcon} alt="upload-icon" />
             </div>
@@ -122,7 +107,7 @@ const PhotoUpload = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                image.png
+                {value?.name || "Emri i skedarit"}
               </p>
             </div>
             <div
@@ -132,7 +117,6 @@ const PhotoUpload = ({
                 alignItems: "center",
               }}
             >
-
               <button
                 type="button"
                 onClick={removeFile}
@@ -166,23 +150,4 @@ const PhotoUpload = ({
   );
 };
 
-const PhotoUploadExample = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileSelect = (file) => {
-    setSelectedFile(file);
-    console.log("Selected file:", file);
-  };
-
-  return (
-    <div>
-      <PhotoUpload
-        onFileSelect={handleFileSelect}
-        acceptedTypes="image/*"
-        maxSize={5 * 1024 * 1024}
-      />
-    </div>
-  );
-};
-
-export default PhotoUploadExample;
+export default PhotoUpload;

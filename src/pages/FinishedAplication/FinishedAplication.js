@@ -1,32 +1,33 @@
-import React from "react";
-import logo from "../../assets/logo.png";
 import PersonPhoto from "../../assets/photo.jpeg";
 import classes from "./Finished.module.css";
-import { flexDirection } from "@mui/system";
+import Checkbox from '@mui/material/Checkbox';
+import { styled } from '@mui/material/styles';
+import ButtonStepper from "../../components/ButtonStepper/ButtonStepper";
+
+const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: '#DB0035',
+  '&.Mui-checked': {
+    color: '#DB0035',
+  },
+}));
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo',  } };
 
 const styles = {
-  container: {
-    maxWidth: "1121px",
-    margin: "0 auto",
-    backgroundColor: "#FFFFFF",
-    padding: "60px 108px",
-  },
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 28,
   },
+  fieldGroup: {
+    display: "flex",
+    gap: "15px",
+  },
   formTitle: {
     fontSize: "24px",
     fontWeight: "700",
     lineHeight: "28px",
-  },
-  row: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    gap: "35px",
   },
   column: {
     display: "flex",
@@ -58,15 +59,12 @@ const styles = {
     fontWeight: "700",
     color: "#DB0035",
   },
-  logo: {
-    width: 225,
-    height: 53,
-  },
 
   fieldGroupLabel: {
     display: "flex",
     flexDirection: "column",
     gap: "12px",
+    marginRight: "20px",
   },
 
   fieldGroupValue: {
@@ -107,6 +105,7 @@ const styles = {
   checkboxInput: {
     width: "10px",
     height: "10px",
+    backgroundColor: "#fff",
   },
   termsText: {
     fontSize: "8px",
@@ -118,7 +117,6 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    borderTop: "1px solid #ddd",
   },
   submitButton: {
     backgroundColor: "#e91e63",
@@ -141,68 +139,62 @@ const styles = {
   },
 };
 
-const FinishedAplication = () => {
+const FinishedAplication = ({ onBack, onSubmit }) => {
+  const handleSubmit = () => {
+    // Add your form submission logic here
+    console.log("Form submitted!");
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
   return (
-    <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
-        <h1 style={styles.formTitle}>
-          Formular <span style={styles.highlight}>Aplikimi</span>
-        </h1>
-        <img src={logo} alt="logo" style={styles.logo} />
-      </div>
+    <div >
       <div className={classes.divider}></div>
       <div style={styles.content}>
         {/* Personal Information */}
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Përmbledhje</h2>
-
           <img
             src={PersonPhoto}
             alt="Person"
             className={classes.photoPlaceholder}
           />
-          <div style={styles.row}>
-            <div style={styles.row}>
+          <div className={classes.row}>
+            <div className={classes.row}>
               <div style={styles.fieldGroupLabel}>
                 <span style={styles.label}>Emri dhe Mbiemri:</span>
-              
+
                 <span style={styles.label}>Datëlindja:</span>
                 <span style={styles.label}>Vendlindja:</span>
                 <span style={styles.label}>Gjinia:</span>
-              
-             
               </div>
               <div style={styles.fieldGroupValue}>
                 <span style={styles.value}>John Doe</span>
-           
+
                 <span style={styles.value}>09/12/89</span>
-            
+
                 <span style={styles.value}>Tirana</span>
 
                 <span style={styles.value}>Mashkull</span>
-           
               </div>
             </div>
-            <div style={styles.row}>
+            <div className={classes.row}>
               <div style={styles.fieldGroupLabel}>
-               
                 <span style={styles.label}>Statusi Civil:</span>
-           
+
                 <span style={styles.label}>Adresa:</span>
-            
+
                 <span style={styles.label}>Telefon / Celular:</span>
-           
+
                 <span style={styles.label}>E-mail:</span>
               </div>
               <div style={styles.fieldGroupValue}>
-               
                 <span style={styles.value}>I martuar</span>
-              
+
                 <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
-                
+
                 <span style={styles.value}>+355 123 456 7891</span>
-                
+
                 <span style={styles.value}>john.doe@email.com</span>
               </div>
             </div>
@@ -228,28 +220,32 @@ const FinishedAplication = () => {
         {/* Access */}
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Arsimi</h2>
-          <div style={styles.row}>
-            <div style={styles.column}>
-              <div style={styles.fieldGroup}>
+          <div className={classes.row}>
+            <div className={classes.row}>
+              <div style={styles.fieldGroupLabel}>
                 <span style={styles.label}>Instituti:</span>
+
+                <span style={styles.label}>Diploma:</span>
+              </div>
+              <div style={styles.fieldGroupValue}>
                 <span style={styles.value}>
                   FSHN- Fakulteti i Shkencave te Natyres
                 </span>
-              </div>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Vendndodhja e institutit: </span>
-                <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
-              </div>
-            </div>
-            <div style={styles.column}>
-              <div style={styles.fieldGroup}>
-                <span style={styles.label}>Diploma:</span>
+
                 <span style={styles.value}>
                   Bachelor në Shkenca Kompjuterike
                 </span>
               </div>
-              <div style={styles.fieldGroup}>
+            </div>
+            <div className={classes.row}>
+              <div style={styles.fieldGroupLabel}>
+                <span style={styles.label}>Vendndodhja e institutit:</span>
+
                 <span style={styles.label}>Periudha:</span>
+              </div>
+              <div style={styles.fieldGroupValue}>
+                <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
+
                 <span style={styles.value}>11/11/2020 - 14/06/2023</span>
               </div>
             </div>
@@ -258,26 +254,30 @@ const FinishedAplication = () => {
 
         <div className={classes.divider}></div>
 
-        <div style={styles.row}>
-          <div style={styles.column}>
-            <div style={styles.fieldGroup}>
+        <div className={classes.row}>
+          <div className={classes.row}>
+            <div style={styles.fieldGroupLabel}>
               <span style={styles.label}>Instituti:</span>
+
+              <span style={styles.label}>Diploma:</span>
+            </div>
+            <div style={styles.fieldGroupValue}>
               <span style={styles.value}>
                 FSHN- Fakulteti i Shkencave te Natyres
               </span>
-            </div>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Vendndodhja e institutit: </span>
-              <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
-            </div>
-          </div>
-          <div style={styles.column}>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Diploma:</span>
+
               <span style={styles.value}>Bachelor në Shkenca Kompjuterike</span>
             </div>
-            <div style={styles.fieldGroup}>
+          </div>
+          <div className={classes.row}>
+            <div style={styles.fieldGroupLabel}>
+              <span style={styles.label}>Vendndodhja e institutit:</span>
+
               <span style={styles.label}>Periudha:</span>
+            </div>
+            <div style={styles.fieldGroupValue}>
+              <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
+
               <span style={styles.value}>11/11/2020 - 14/06/2023</span>
             </div>
           </div>
@@ -286,26 +286,30 @@ const FinishedAplication = () => {
         {/* Previous Experience */}
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Eksperienca pune</h2>
-          <div style={styles.column}>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Kompania:</span>
-              <span style={styles.value}>Tegeria</span>
+          <div className={classes.row}>
+            <div className={classes.row}>
+              <div style={styles.fieldGroupLabel}>
+                <span style={styles.label}>Kompania:</span>
+                <span style={styles.label}>Vendndodhja:</span>
+                <span style={styles.label}>Periudha:</span>
+              </div>
+              <div style={styles.fieldGroupValue}>
+                <span style={styles.value}>Tegeria</span>
+                <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
+                <span style={styles.value}>11/11/2020 - 14/06/2023</span>
+              </div>
             </div>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>LLoji i biznesit:</span>
-              <span style={styles.value}>Shpk</span>
-            </div>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Vendndodhja e institutit: </span>
-              <span style={styles.value}>Bulevardi Zogu I, Tirane</span>
-            </div>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Periudha:</span>
-              <span style={styles.value}>11/11/2020 - 14/06/2023</span>
-            </div>
-            <div style={styles.fieldGroup}>
-              <span style={styles.label}>Periudha:</span>
-              <span style={styles.value}>11/11/2020 - 14/06/2023</span>
+            <div className={classes.row}>
+              <div style={styles.fieldGroupLabel}>
+                <span style={styles.label}>Lloji i biznesit:</span>
+
+                <span style={styles.label}>Periudha:</span>
+              </div>
+              <div style={styles.fieldGroupValue}>
+                <span style={styles.value}>Shpk</span>
+
+                <span style={styles.value}>11/11/2020 - 14/06/2023</span>
+              </div>
             </div>
           </div>
           <div style={styles.column}>
@@ -341,7 +345,7 @@ const FinishedAplication = () => {
           </div>
           <div style={{ marginBottom: "12px" }}></div>
 
-          <div style={styles.row}>
+          <div className={classes.row}>
             <div style={styles.column}>
               <div style={styles.fieldGroup}>
                 <span style={styles.label}>Instituti:</span>
@@ -450,27 +454,26 @@ const FinishedAplication = () => {
               <span style={styles.value}>Nga lajmërimi në shtyp</span>
             </div>
           </div>
-
-          <input
-            type="checkbox"
-            checked
-            readOnly
-            style={styles.checkboxInput}
-          />
-          <span style={{ fontSize: "12px" }}>
-            Deklaratë të plotë për information profesorët që ndryshe nuk duhet
-            të sigurohen informacione ose të krahasojnë ose të përdor vetëm për
-            qëllimin e aplikimit të statusit te edukimit, për autoritetet
-            përkatëse ose personel që po punon për këtë pjesë të vendosur në
-            këtë shtet, vendet e gatshme për programet.
+          <div style={{ marginBottom: 48 }}></div>
+          <CustomCheckbox  {...label} defaultChecked />
+          <span style={{ fontSize: "12px", fontWeight: "400",color: "#1E1E1E" }}>
+            Unë deklaroj se të gjitha të dhënat janë të vërteta dhe të plota dhe
+            jam dakord që çdo falsifikim i informacionit, pavarësisht periudhës
+            së zbulimit, mund të shkaktojë përfundim të marrëdhënies time të
+            punësimit me kompaninë. Unë kuptoj që i gjithë informacioni në këtë
+            aplikim është subjekt verifikimi.
           </span>
         </section>
-
+        <div style={{ marginBottom: 15 }}></div>
+      <div className={classes.divider}></div>
         {/* Submit Section */}
-        <div style={styles.submitSection}>
-          <button style={styles.backButton}>← Mbrapa</button>
-          <button style={styles.submitButton}>DËRGO APLIKIMIN</button>
-        </div>
+      <ButtonStepper
+          activeStep={8}
+          stepsLength={9}
+          onNext={handleSubmit}
+          onBack={onBack}
+          isLastStep={true}
+        />
       </div>
     </div>
   );

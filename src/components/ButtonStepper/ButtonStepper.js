@@ -9,8 +9,9 @@ export default function ButtonStepper({
   stepsLength,
   onNext,
   onBack,
+  isLastStep ,
 }) {
-  const isLastStep = activeStep === stepsLength - 1;
+  
   const isFirstStep = activeStep === 0;
   const isCompleted = activeStep === stepsLength;
 
@@ -34,7 +35,7 @@ export default function ButtonStepper({
         disabled={isFirstStep}
       >
         <img src={chevronUp} alt="chevron" className={classes.chevron} />
-        Back
+        Kthehu
       </button>   } 
       
       <button
@@ -42,8 +43,8 @@ export default function ButtonStepper({
         onClick={onNext}
         disabled={isCompleted}
       >
-        {isLastStep ? "Finish" : "Next"}
-        <img src={chevron} alt="chevron" className={classes.chevron} />
+        {isLastStep ? "Dërgo aplikimin" : "Vazhdo"}
+        {!isLastStep && <img src={chevron} alt="chevron" className={classes.chevron} />}
       </button>
     </div>
   );

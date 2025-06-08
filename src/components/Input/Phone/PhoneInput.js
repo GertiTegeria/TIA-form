@@ -8,7 +8,6 @@ const PhoneIcon = () => (
 const styles = {
   inputWrapper: {
     width: "100%",
-    
   },
 
   topLabel: {
@@ -24,7 +23,7 @@ const styles = {
     alignItems: "center",
     border: "1px solid #B5B5B5",
     fontSize: "14px",
-     height: "52px"
+    height: "52px",
   },
 
   inputContainerDisabled: {
@@ -51,13 +50,13 @@ const styles = {
     marginRight: "6px",
   },
 
-input: {
+  input: {
     flex: 1,
     border: "none",
     outline: "none",
     fontSize: "12px",
-    height: "100%",         
-    padding: "0 12px",     
+    height: "100%",
+    padding: "0 12px",
     backgroundColor: "transparent",
     fontFamily: "inherit",
     color: "#1E1E1E",
@@ -68,7 +67,7 @@ input: {
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-    padding: "0 16px",      
+    padding: "0 16px",
   },
   helperText: {
     fontSize: "12px",
@@ -117,7 +116,17 @@ const CustomPhoneInput = ({
   };
 
   const handlePhoneNumberChange = (e) => {
-    const newPhoneNumber = e.target.value;
+    // Merr vlerën e inputit
+    let newPhoneNumber = e.target.value;
+
+    // Heq çdo gjë që nuk është numër (vetëm 0-9 lejohen)
+    newPhoneNumber = newPhoneNumber.replace(/\D/g, "");
+
+    // Kufizo deri në 9 shifra (për siguri)
+    if (newPhoneNumber.length > 10) {
+      newPhoneNumber = newPhoneNumber.slice(0, 10);
+    }
+
     setPhoneNumber(newPhoneNumber);
 
     const fullNumber = selectedCountryCode + newPhoneNumber;
@@ -150,13 +159,13 @@ const CustomPhoneInput = ({
 
   return (
     <div style={styles.inputWrapper}>
-        <style>
-      {`
+      <style>
+        {`
         input::placeholder {
           color: #1E1E1E;
         }
       `}
-    </style>
+      </style>
       {topLabel && <label style={styles.topLabel}>{topLabel}</label>}
 
       <div style={inputContainerStyle}>
@@ -174,6 +183,9 @@ const CustomPhoneInput = ({
           disabled={disabled}
           style={styles.input}
           autoComplete="tel"
+          inputMode="numeric"
+          pattern="[0-10]*"
+          maxLength={10}
         />
 
         <span style={styles.phoneIconEnd}>
@@ -191,11 +203,18 @@ const PhoneInputDemo = () => {
   const [error, setError] = useState("");
 
   const handlePhoneChange = (e) => {
-    setPhoneValue(e.target.value);
+    const fullInput = e.target.value;
+    const rawNumber = fullInput.replace(/^\+355/, "").replace(/\D/g, ""); // heq gjithçka që s’është numër
 
-    const phoneNumberOnly = e.target.value.replace(/^\+\d+/, "").trim();
-    if (phoneNumberOnly.length > 0 && phoneNumberOnly.length < 7) {
-      setError("Phone number is too short");
+    // Vendos vlerën e pastër mbrapsht si +355xxxxxxxxx
+    const cleaned = "+355" + rawNumber;
+    setPhoneValue(cleaned);
+
+    // Validimi
+    if (rawNumber.length === 0) {
+      setError("Ju lutem shkruani numrin");
+    } else if (rawNumber.length !== 10) {
+      setError("Numri duhet të ketë saktësisht 10 shifra");
     } else {
       setError("");
     }

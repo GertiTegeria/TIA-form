@@ -25,6 +25,13 @@ export const civilStatusOptions = [
 ];
 
 
+export const workTimeOptions = [
+    { value: "kohe_plote", label: "Kohë e plotë" },
+    { value: "kohe_pjesshme", label: "Kohë e pjesshme" },
+    { value: "turne", label: "Turne" },
+  ];
+
+
 export const steps = [
     "Te dhenat Personale",
     "Arsimi",

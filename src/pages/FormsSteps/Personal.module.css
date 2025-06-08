@@ -24,6 +24,11 @@
     margin-bottom: 18px;
 }
 
+.icon {
+    width: 14px;
+    height: 14px;
+}
+
 
 @media (max-width: 670px) {
  .firstGroup{
