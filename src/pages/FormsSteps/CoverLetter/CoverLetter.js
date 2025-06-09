@@ -1,6 +1,6 @@
 import React from 'react'
 import CoverLetterTextarea from '../../../components/Input/TextArea/TextArea'
-import PhotoUpload from '../../../components/UploadPic/UploadPic'
+import FileUpload from '../../../components/UploadPic/UploadPic'
 
 export default function CoverLetter({ formData, updateFormData }) {
   return (
@@ -13,13 +13,14 @@ export default function CoverLetter({ formData, updateFormData }) {
         rows={10}
         maxLength={2000}
       />
-       <PhotoUpload
-        onFileSelect={(file) => updateFormData("coverLetterFile", file)}
-        acceptedTypes="image/*,application/pdf"
-        maxSize={5 * 1024 * 1024}
-        value={formData.coverLetterFile}
-        coverLetter={true}
-      />
+     <FileUpload
+  onFileSelect={(file) => updateFormData("coverLetterFile", file)}
+  acceptedTypes="image/*,application/pdf"
+  maxSize={5 * 1024 * 1024}
+  coverLetter={true}
+  value={formData.coverLetterFile}
+/>
+
     </div>
   )
 }

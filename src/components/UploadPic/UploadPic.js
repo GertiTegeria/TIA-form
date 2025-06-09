@@ -1,37 +1,35 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import ArrowUp from "../../assets/arrowUp.png";
 import UploadIcon from "../../assets/uploadPic.png";
 import RecycleIcon from "../../assets/recycle.png";
 import PdfIcon from "../../assets/Cover.png";
 
-const PhotoUpload = ({
+const FileUpload = ({
   onFileSelect,
   acceptedTypes = "image/*",
   maxSize = 5 * 1024 * 1024,
   disabled = false,
   coverLetter = false,
+  value = null,
 }) => {
-  const [uploadedFile, setUploadedFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileSelect = (files) => {
     const file = files[0];
     if (file) {
-      if (!file.type.startsWith("image/")) {
-        alert("Ju lutem zgjidhni një fotografi të vlefshme.");
+      const isPdf = file.type === "application/pdf";
+      const isImage = file.type.startsWith("image/");
+
+      if (!isPdf && !isImage) {
+        alert("Ju lutem ngarkoni një imazh ose PDF.");
         return;
       }
 
       if (file.size > maxSize) {
-        alert(
-          `Madhësia e fotografisë duhet të jetë më e vogël se ${Math.round(
-            maxSize / (1024 * 1024)
-          )}MB.`
-        );
+        alert(`Skedari duhet të jetë më i vogël se ${Math.round(maxSize / (1024 * 1024))}MB.`);
         return;
       }
 
-      setUploadedFile(file);
       if (onFileSelect) {
         onFileSelect(file);
       }
@@ -50,24 +48,14 @@ const PhotoUpload = ({
   };
 
   const removeFile = () => {
-    setUploadedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-    if (onFileSelect) {
-      onFileSelect(null);
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (onFileSelect) onFileSelect(null);
   };
 
   return (
     <div style={{ width: "100%", alignItems: "start" }}>
-      {!uploadedFile ? (
-        <div
-          onClick={handleClick}
-          style={{
-            alignItems: "start",
-          }}
-        >
+      {!value ? (
+        <div onClick={handleClick}>
           <button
             type="button"
             style={{
@@ -81,22 +69,11 @@ const PhotoUpload = ({
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              
             }}
-            // onMouseEnter={(e) => {
-            //   if (!disabled) {
-            //     e.target.style.backgroundColor = '#c2185b';
-            //   }
-            // }}
-            // onMouseLeave={(e) => {
-            //   if (!disabled) {
-            //     e.target.style.backgroundColor = '#e91e63';
-            //   }
-            // }}
             disabled={disabled}
           >
             <img src={ArrowUp} alt="arrow-up" />
-            {coverLetter ? "Ngarko fotografinë tuaj" : "Ngarko si pdf"}
+            {coverLetter ? "Ngarko si PDF" : "Ngarko fotografi"}
           </button>
         </div>
       ) : (
@@ -108,14 +85,18 @@ const PhotoUpload = ({
             maxWidth: "250px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "start", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div>
-              {coverLetter ? <img src={UploadIcon} alt="upload-icon" /> : <img src={PdfIcon} alt="pdf-icon" style={{ width: "14px", height: "14px" }} />}
+              {value.type === "application/pdf" ? (
+                <img src={PdfIcon} alt="pdf-icon" style={{ width: "14px", height: "14px" }} />
+              ) : (
+                <img src={UploadIcon} alt="upload-icon" />
+              )}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p
                 style={{
-                  margin: "0 0 4px 0",
+                  margin: "0",
                   fontSize: "14px",
                   fontWeight: "500",
                   color: "#333",
@@ -124,33 +105,22 @@ const PhotoUpload = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {coverLetter ? "image.png" : "Coverletter.pdf"}
+                {value.type === "application/pdf" ? "Coverletter.pdf" : "image.png"}
               </p>
             </div>
-            <div
+            <button
+              type="button"
+              onClick={removeFile}
               style={{
-                display: "flex",
-                gap: "8px",
-                alignItems: "center",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "4px",
+                borderRadius: "50%",
               }}
             >
-              <button
-                type="button"
-                onClick={removeFile}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "4px",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img src={RecycleIcon} alt="remove-icon" />
-              </button>
-            </div>
+              <img src={RecycleIcon} alt="remove-icon" />
+            </button>
           </div>
         </div>
       )}
@@ -167,23 +137,4 @@ const PhotoUpload = ({
   );
 };
 
-const PhotoUploadExample = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileSelect = (file) => {
-    setSelectedFile(file);
-    console.log("Selected file:", file);
-  };
-
-  return (
-    <div>
-      <PhotoUpload
-        onFileSelect={handleFileSelect}
-        acceptedTypes="image/*"
-        maxSize={5 * 1024 * 1024}
-      />
-    </div>
-  );
-};
-
-export default PhotoUploadExample;
+export default FileUpload;

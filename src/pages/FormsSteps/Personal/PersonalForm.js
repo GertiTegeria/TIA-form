@@ -3,7 +3,6 @@ import classes from "./Personal.module.css";
 import CustomSelecter from "../../../components/Input/Autocomplete/Autocomplete";
 import locationIcon from "../../../assets/location.png";
 import emailIcon from "../../../assets/email.svg";
-import PhoneInputDemo from "../../../components/Input/Phone/PhoneInput";
 import CustomRadioButton from "../../../components/Input/RadioButton/RadioButton";
 import {
   options,
@@ -11,9 +10,9 @@ import {
   civilStatusOptions,
   workTimeOptions,
 } from "../../../DummyData/DUMMYDATA";
-import PhotoUpload from "../../../components/UploadPic/UploadPic";
 import DateInputDemo from "../../../components/Input/Date/Date";
 import CustomPhoneInput from "../../../components/Input/Phone/PhoneInput";
+import FileUpload from "../../../components/UploadPic/UploadPic";
 
 export default function PersonalForm({ formData, updateFormData }) {
   return (
@@ -91,7 +90,7 @@ export default function PersonalForm({ formData, updateFormData }) {
           iconPosition="end"
         />
       </div>
-      <PhotoUpload
+      <FileUpload
         onFileSelect={(file) => updateFormData("photoFile", file)}
         acceptedTypes="image/*,application/pdf"
         maxSize={5 * 1024 * 1024}
