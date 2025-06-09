@@ -96,24 +96,7 @@ const CustomPhoneInput = ({
   const [selectedCountryCode, setSelectedCountryCode] =
     useState(defaultCountryCode);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(
-    value ? value.replace(selectedCountryCode, "").trim() : ""
-  );
-
-  const handleCountryCodeChange = (code) => {
-    setSelectedCountryCode(code);
-    setIsDropdownOpen(false);
-
-    const fullNumber = code + phoneNumber;
-    if (onChange) {
-      onChange({
-        target: {
-          name,
-          value: fullNumber,
-        },
-      });
-    }
-  };
+  
 
   const handlePhoneNumberChange = (e) => {
     // Merr vlerën e inputit
@@ -127,7 +110,7 @@ const CustomPhoneInput = ({
       newPhoneNumber = newPhoneNumber.slice(0, 10);
     }
 
-    setPhoneNumber(newPhoneNumber);
+
 
     const fullNumber = selectedCountryCode + newPhoneNumber;
     if (onChange) {
@@ -176,8 +159,8 @@ const CustomPhoneInput = ({
         <input
           type="tel"
           name={name}
-          value={phoneNumber}
-          onChange={handlePhoneNumberChange}
+          value={value}
+          onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder || label}
           disabled={disabled}
@@ -198,40 +181,4 @@ const CustomPhoneInput = ({
   );
 };
 
-const PhoneInputDemo = () => {
-  const [phoneValue, setPhoneValue] = useState("");
-  const [error, setError] = useState("");
-
-  const handlePhoneChange = (e) => {
-    const fullInput = e.target.value;
-    const rawNumber = fullInput.replace(/^\+355/, "").replace(/\D/g, ""); // heq gjithçka që s’është numër
-
-    // Vendos vlerën e pastër mbrapsht si +355xxxxxxxxx
-    const cleaned = "+355" + rawNumber;
-    setPhoneValue(cleaned);
-
-    // Validimi
-    if (rawNumber.length === 0) {
-      setError("Ju lutem shkruani numrin");
-    } else if (rawNumber.length !== 10) {
-      setError("Numri duhet të ketë saktësisht 10 shifra");
-    } else {
-      setError("");
-    }
-  };
-
-  return (
-    <CustomPhoneInput
-      name="phone"
-      value={phoneValue}
-      onChange={handlePhoneChange}
-      topLabel="Telefon / Celular"
-      placeholder="Enter your phone number"
-      error={!!error}
-      helperText={error}
-      defaultCountryCode="+355"
-    />
-  );
-};
-
-export default PhoneInputDemo;
+export default CustomPhoneInput;

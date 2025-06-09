@@ -1,16 +1,16 @@
 import PersonPhoto from "../../assets/photo.jpeg";
 import classes from "./Finished.module.css";
-import Checkbox from '@mui/material/Checkbox';
 import { styled } from '@mui/material/styles';
 import ButtonStepper from "../../components/ButtonStepper/ButtonStepper";
+import Checkbox from '@mui/material/Checkbox';
 
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  color: '#DB0035',
+const CustomCheckbox = styled(Checkbox)(() => ({
+padding: "0px",
   '&.Mui-checked': {
     color: '#DB0035',
+    padding: "0px",
   },
 }));
-
 const label = { inputProps: { 'aria-label': 'Checkbox demo',  } };
 
 const styles = {
@@ -60,13 +60,6 @@ const styles = {
     color: "#DB0035",
   },
 
-  fieldGroupLabel: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-    marginRight: "20px",
-  },
-
   fieldGroupValue: {
     display: "flex",
     flexDirection: "column",
@@ -89,8 +82,9 @@ const styles = {
   },
   textArea: {
     fontSize: "14px",
-    lineHeight: "20px",
+    lineHeight: "24px",
     color: "#1E1E1E",
+    fontWeight: "400",
   },
   checkboxSection: {
     display: "flex",
@@ -161,7 +155,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
           />
           <div className={classes.row}>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div className={classes.fieldGroupLabel}>
                 <span style={styles.label}>Emri dhe Mbiemri:</span>
 
                 <span style={styles.label}>Datëlindja:</span>
@@ -179,7 +173,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
               </div>
             </div>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div className={classes.fieldGroupLabel}>
                 <span style={styles.label}>Statusi Civil:</span>
 
                 <span style={styles.label}>Adresa:</span>
@@ -222,12 +216,12 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
           <h2 style={styles.sectionTitle}>Arsimi</h2>
           <div className={classes.row}>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div className={classes.fieldGroupLabel}>
                 <span style={styles.label}>Instituti:</span>
 
                 <span style={styles.label}>Diploma:</span>
               </div>
-              <div style={styles.fieldGroupValue}>
+              <div className={classes.fieldGroupValue}>
                 <span style={styles.value}>
                   FSHN- Fakulteti i Shkencave te Natyres
                 </span>
@@ -238,7 +232,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
               </div>
             </div>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div className={classes.fieldGroupLabel}>
                 <span style={styles.label}>Vendndodhja e institutit:</span>
 
                 <span style={styles.label}>Periudha:</span>
@@ -256,7 +250,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
 
         <div className={classes.row}>
           <div className={classes.row}>
-            <div style={styles.fieldGroupLabel}>
+            <div className={classes.fieldGroupLabel}>
               <span style={styles.label}>Instituti:</span>
 
               <span style={styles.label}>Diploma:</span>
@@ -270,7 +264,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
             </div>
           </div>
           <div className={classes.row}>
-            <div style={styles.fieldGroupLabel}>
+            <div className={classes.fieldGroupLabel}>
               <span style={styles.label}>Vendndodhja e institutit:</span>
 
               <span style={styles.label}>Periudha:</span>
@@ -288,7 +282,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
           <h2 style={styles.sectionTitle}>Eksperienca pune</h2>
           <div className={classes.row}>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div className={classes.fieldGroupLabel}>
                 <span style={styles.label}>Kompania:</span>
                 <span style={styles.label}>Vendndodhja:</span>
                 <span style={styles.label}>Periudha:</span>
@@ -300,7 +294,7 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
               </div>
             </div>
             <div className={classes.row}>
-              <div style={styles.fieldGroupLabel}>
+              <div children={classes.fieldGroupLabel}>
                 <span style={styles.label}>Lloji i biznesit:</span>
 
                 <span style={styles.label}>Periudha:</span>
@@ -454,15 +448,27 @@ const FinishedAplication = ({ onBack, onSubmit }) => {
               <span style={styles.value}>Nga lajmërimi në shtyp</span>
             </div>
           </div>
-          <div style={{ marginBottom: 48 }}></div>
-          <CustomCheckbox  {...label} defaultChecked />
-          <span style={{ fontSize: "12px", fontWeight: "400",color: "#1E1E1E" }}>
-            Unë deklaroj se të gjitha të dhënat janë të vërteta dhe të plota dhe
+         
+          <div style={{
+        display: "flex", 
+        gap: "8px",
+        alignItems: "flex-start"  ,
+        marginTop: "48px",
+      }}>
+        <CustomCheckbox {...label} defaultChecked />
+        <div style={{ 
+          fontSize: "12px", 
+          fontWeight: "400",
+          color: "#1E1E1E", 
+          lineHeight: "20px",
+        }}>
+          Unë deklaroj se të gjitha të dhënat janë të vërteta dhe të plota dhe
             jam dakord që çdo falsifikim i informacionit, pavarësisht periudhës
             së zbulimit, mund të shkaktojë përfundim të marrëdhënies time të
             punësimit me kompaninë. Unë kuptoj që i gjithë informacioni në këtë
             aplikim është subjekt verifikimi.
-          </span>
+        </div>
+      </div>
         </section>
         <div style={{ marginBottom: 15 }}></div>
       <div className={classes.divider}></div>

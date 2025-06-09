@@ -134,7 +134,7 @@ const CustomDateInput = ({
   );
 };
 
-const DateInputDemo = ({onChange, value}) => {
+const DateInputDemo = ({onChange, value, topLabel}) => {
   // const [dateValue, setDateValue] = React.useState('');
   // const [errorState, setErrorState] = React.useState(false);
 
@@ -153,7 +153,7 @@ const DateInputDemo = ({onChange, value}) => {
   return (
     <CustomDateInput
       name="birthDate"
-      topLabel="Datëlindja"
+      topLabel={topLabel}
       value={value}
       onChange={onChange}
       placeholder="dd/mm/yyyy"

@@ -1,0 +1,12 @@
+.personalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.h3Title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #1E1E1E;
+}

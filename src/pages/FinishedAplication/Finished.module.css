@@ -2,6 +2,7 @@
     max-width: 1121px;
     margin: 0 auto;
     background-color: "#FFFFFF";
+    justify-content: center;
     padding: 60px 108px;
 }
 
@@ -55,6 +56,13 @@ flex-wrap: wrap;
 }
 
 
+.fieldGroupLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-right: 20px;
+}
+
 @media (max-width: 540px) {
  .container{
     padding: 20px 60px;
@@ -70,6 +78,9 @@ flex-wrap: wrap;
 
 @media (max-width: 480px) {
  .container{
-    padding: 20px 40px;
+    padding: 10px;
  }  
+ .fieldGroupLabel{
+    margin-right: 10;
+ }
 }

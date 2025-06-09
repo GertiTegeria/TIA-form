@@ -3,3 +3,11 @@
   max-width: 1000px;
   padding: 24px 40px;
 }
+
+
+@media (max-width: 480px) {
+  .card{
+     padding: 10px;
+     width: 100%;
+  }  
+ }

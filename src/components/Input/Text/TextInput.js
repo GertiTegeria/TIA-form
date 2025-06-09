@@ -15,12 +15,13 @@ const CustomTextInput = ({
   error,
   helperText,
   disabled,
+  width    
 }) => {
   return (
     <div className={classes.inputWrapper}>
       {topLabel && <label className={classes.topLabel}>{topLabel}</label>}
 
-      <div className={`${classes.inputContainer} ${error ? classes.error : ""} ${disabled ? classes.disabled : ""}`}>
+      <div className={`${classes.inputContainer} ${error ? classes.error : ""} ${disabled ? classes.disabled : ""}`} style={{ width }}>
         {icon && iconPosition === "start" && (
           <span className={classes.icon}>{icon}</span>
         )}
@@ -35,6 +36,7 @@ const CustomTextInput = ({
           disabled={disabled}
           className={classes.input}
           autoComplete="off"
+         
         />
 
         {icon && iconPosition === "end" && (

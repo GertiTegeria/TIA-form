@@ -1,7 +1,7 @@
 .wrapper {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
+    
     width: 100%;
   }
   
@@ -42,3 +42,14 @@
     width: 24px;
     height: 24px;
   }
+
+
+
+  @media (max-width: 480px) {
+    .nextBtn {
+      width: 120px;
+    }
+    .backBtn {
+      width: 120px;
+    }
+   }

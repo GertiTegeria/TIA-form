@@ -4,24 +4,74 @@ import HorizontalLinearStepper from "../../components/Stepper/HorizontalLinearSt
 import ButtonStepper from "../../components/ButtonStepper/ButtonStepper";
 import { useState } from "react";
 import Card from "../../components/Card/Card";
-import PersonalForm from "../FormsSteps/PersonalForm";
+import PersonalForm from "../FormsSteps/Personal/PersonalForm";
 import { steps } from "../../DummyData/DUMMYDATA";
 import FinishedAplication from "../FinishedAplication/FinishedAplication";
+import EducationForm from "../FormsSteps/Education/EducationForm";
+import WorkExperience from "../FormsSteps/Experience/WorkExperience";
+import Training from "../FormsSteps/Training/Training";
+import Language from "../FormsSteps/Languages/Languages";
+import ExtraQuestion from "../FormsSteps/ExtraQuestion/ExtraQuestion";
+import ComputerProgram from "../FormsSteps/ComputerProgram/ComputerProgram";
+import CoverLetter from "../FormsSteps/CoverLetter/CoverLetter";
 
 function ApplicationForm() {
   const [activeStep, setActiveStep] = useState(0);
 
   const [formData, setFormData] = useState({
     emriMbiemri: "",
-    vendlindja: "",
+    vendlindjaPersonal: "",
     gjinia: "",
     statusiCivil: "",
-    adresa: "",
+    phoneNumber: "",
+    adresaPersonal: "",
     telefon: "",
     email: "",
-    date: "",
-    pozicioni: "", 
-    mundësiaPunë: "", 
+    datePersonal: "",
+    pozicioni: "",
+    mundësiaPunë: "",
+    education: [
+      {
+        institution: "",
+        location: "",
+        diploma: "",
+        startDate: "",
+        endDate: "",
+      },
+    ],
+    workExperience: [
+      {
+        company: "",
+        location: "",
+        position: "",
+        buinessType: "",
+        startDate: "",
+        endDate: "",
+        positionDetails: "",
+      },
+    ],
+    training: [
+      {
+        title: "",
+        instituti: "",
+        vendodhja: "",
+        year: "",
+        duration: "",
+      },
+    ],
+    computerPrograms: {},
+    foreignLanguages: [
+      {
+        language: "",
+        level: "",
+      },
+    ],
+    coverLetter: "",
+    additionalQuestions: "",
+    additionalQuestions2: "",
+    specifyRelationship: "",
+    coverLetterLength: "",
+    coverLetterFile: "",
   });
 
   const updateFormData = (field, value) => {
@@ -37,6 +87,141 @@ function ApplicationForm() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const updateEducationEntry = (index, field, value) => {
+    const updatedEducation = [...formData.education];
+    updatedEducation[index][field] = value;
+    setFormData((prev) => ({
+      ...prev,
+      education: updatedEducation,
+    }));
+  };
+
+  const addEducationEntry = () => {
+    setFormData((prev) => ({
+      ...prev,
+      education: [
+        ...prev.education,
+        {
+          institution: "",
+          location: "",
+          diploma: "",
+          startDate: "",
+          endDate: "",
+        },
+      ],
+    }));
+  };
+
+  const removeEducationEntry = () => {
+    if (formData.education.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        education: prev.education.slice(0, -1),
+      }));
+    }
+  };
+
+  const updateWorkExperienceEntry = (index, field, value) => {
+    const updatedWorkExperience = [...formData.workExperience];
+    updatedWorkExperience[index][field] = value;
+    setFormData((prev) => ({
+      ...prev,
+      workExperience: updatedWorkExperience,
+    }));
+  };
+
+  const addWorkExperienceEntry = () => {
+    setFormData((prev) => ({
+      ...prev,
+      workExperience: [
+        ...prev.workExperience,
+        {
+          company: "",
+          location: "",
+          position: "",
+          buinessType: "",
+          startDate: "",
+          endDate: "",
+          positionDetails: "",
+        },
+      ],
+    }));
+  };
+
+  const removeWorkExperienceEntry = () => {
+    if (formData.workExperience.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        workExperience: prev.workExperience.slice(0, -1),
+      }));
+    }
+  };
+
+  const updateTrainingEntry = (index, field, value) => {
+    const updatedTraining = [...formData.training];
+    updatedTraining[index][field] = value;
+    setFormData((prev) => ({
+      ...prev,
+      training: updatedTraining,
+    }));
+  };
+
+  const addTrainingEntry = () => {
+    setFormData((prev) => ({
+      ...prev,
+      training: [
+        ...prev.training,
+        {
+          title: "",
+          instituti: "",
+          vendodhja: "",
+          year: "",
+          duration: "",
+        },
+      ],
+    }));
+  };
+
+  const removeTrainingEntry = () => {
+    if (formData.training.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        training: prev.training.slice(0, -1),
+      }));
+    }
+  };
+
+  const updateLanguageEntry = (index, field, value) => {
+    const updatedLanguage = [...formData.foreignLanguages];
+    updatedLanguage[index][field] = value;
+    setFormData((prev) => ({
+      ...prev,
+      foreignLanguages: updatedLanguage,
+    }));
+  };
+
+  const addLanguageEntry = () => {
+    setFormData((prev) => ({
+      ...prev,
+      foreignLanguages: [
+        ...prev.foreignLanguages,
+        {
+          language: "",
+          level: "",
+        },
+      ],
+    }));
+  };
+
+  const removeLanguageEntry = () => {
+    if (formData.foreignLanguages.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        foreignLanguages: prev.foreignLanguages.slice(0, -1),
+      }));
+    }
   };
 
   const handleSubmit = () => {
@@ -61,19 +246,61 @@ function ApplicationForm() {
             <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
           </div>
         )}
-
         <h3 className={classes.h3red}>{steps[activeStep]}</h3>
         <div className={classes.formContent}>
           {activeStep === 0 && (
             <PersonalForm formData={formData} updateFormData={updateFormData} />
           )}
-          {activeStep === 1 && <div>Education Form</div>}
-          {activeStep === 2 && <div>Work Experience Form</div>}
-          {activeStep === 3 && <div>Professional Training Form</div>}
-          {activeStep === 4 && <div>Computer Programs Form</div>}
-          {activeStep === 5 && <div>Foreign Languages Form</div>}
-          {activeStep === 6 && <div>Cover Letter Form</div>}
-          {activeStep === 7 && <div>Additional Questions Form</div>}
+          {activeStep === 1 && (
+            <EducationForm
+              education={formData.education}
+              updateEducationEntry={updateEducationEntry}
+              addEducationEntry={addEducationEntry}
+              removeEducationEntry={removeEducationEntry}
+            />
+          )}
+
+          {activeStep === 2 && (
+            <WorkExperience
+              workExperience={formData.workExperience}
+              updateWorkExperienceEntry={updateWorkExperienceEntry}
+              addWorkExperienceEntry={addWorkExperienceEntry}
+              removeWorkExperienceEntry={removeWorkExperienceEntry}
+            />
+          )}
+          {activeStep === 3 && (
+            <Training
+              training={formData.training}
+              updateTrainingEntry={updateTrainingEntry}
+              addTrainingEntry={addTrainingEntry}
+              removeTrainingEntry={removeTrainingEntry}
+            />
+          )}
+          {activeStep === 4 && (
+            <ComputerProgram
+              computerPrograms={formData.computerPrograms}
+              setComputerPrograms={(value) =>
+                updateFormData("computerPrograms", value)
+              }
+            />
+          )}
+          {activeStep === 5 && (
+            <Language
+              languages={formData.foreignLanguages}
+              updateLanguageEntry={updateLanguageEntry}
+              addLanguageEntry={addLanguageEntry}
+              removeLanguageEntry={removeLanguageEntry}
+            />
+          )}
+          {activeStep === 6 && (
+            <CoverLetter formData={formData} updateFormData={updateFormData} />
+          )}
+          {activeStep === 7 && (
+            <ExtraQuestion
+              formData={formData}
+              updateFormData={updateFormData}
+            />
+          )}
           {activeStep === 8 && (
             <FinishedAplication onBack={handleBack} onSubmit={handleSubmit} />
           )}

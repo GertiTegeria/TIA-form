@@ -1,18 +1,19 @@
-import CustomTextInput from "../../components/Input/Text/TextInput";
+import CustomTextInput from "../../../components/Input/Text/TextInput";
 import classes from "./Personal.module.css";
-import CustomSelecter from "../../components/Input/Autocomplete/Autocomplete";
-import locationIcon from "../../assets/location.png";
-import emailIcon from "../../assets/email.svg";
-import PhoneInputDemo from "../../components/Input/Phone/PhoneInput";
-import CustomRadioButton from "../../components/Input/RadioButton/RadioButton";
+import CustomSelecter from "../../../components/Input/Autocomplete/Autocomplete";
+import locationIcon from "../../../assets/location.png";
+import emailIcon from "../../../assets/email.svg";
+import PhoneInputDemo from "../../../components/Input/Phone/PhoneInput";
+import CustomRadioButton from "../../../components/Input/RadioButton/RadioButton";
 import {
   options,
   genderOptions,
   civilStatusOptions,
   workTimeOptions,
-} from "../../DummyData/DUMMYDATA";
-import PhotoUpload from "../../components/UploadPic/UploadPic";
-import DateInputDemo from "../../components/Input/Date/Date";
+} from "../../../DummyData/DUMMYDATA";
+import PhotoUpload from "../../../components/UploadPic/UploadPic";
+import DateInputDemo from "../../../components/Input/Date/Date";
+import CustomPhoneInput from "../../../components/Input/Phone/PhoneInput";
 
 export default function PersonalForm({ formData, updateFormData }) {
   return (
@@ -26,8 +27,9 @@ export default function PersonalForm({ formData, updateFormData }) {
           onChange={(e) => updateFormData("emriMbiemri", e.target.value)}
         />
         <DateInputDemo
-          onChange={(e) => updateFormData("date", e.target.value)}
-          value={formData.date}
+          onChange={(e) => updateFormData("datePersonal", e.target.value)}
+          value={formData.datePersonal}
+          topLabel="Datëlindja"
         />
       </div>
       <div className={classes.firstGroup}>
@@ -37,8 +39,8 @@ export default function PersonalForm({ formData, updateFormData }) {
           label="Selekto qytetin"
           name="select"
           topLabel=" Vendlindja"
-          value={formData.vendlindja}
-          onChange={(value) => updateFormData("vendlindja", value)}
+          value={formData.vendlindjaPersonal}
+          onChange={(value) => updateFormData("vendlindjaPersonal", value)}
         />
         <CustomSelecter
           width="100%"
@@ -64,8 +66,8 @@ export default function PersonalForm({ formData, updateFormData }) {
           name="name"
           label="Rruga, qytetit"
           topLabel="Adresa"
-          value={formData.adresa}
-          onChange={(e) => updateFormData("adresa", e.target.value)}
+          value={formData.adresaPersonal}
+          onChange={(e) => updateFormData("adresaPersonal", e.target.value)}
           icon={
             <img src={locationIcon} alt="location" className={classes.icon} />
           }
@@ -73,7 +75,9 @@ export default function PersonalForm({ formData, updateFormData }) {
         />
       </div>
       <div className={classes.firstGroup}>
-        <PhoneInputDemo
+        <CustomPhoneInput
+          topLabel="Telefon / Celular"
+          name="telefon"
           onChange={(e) => updateFormData("telefon", e.target.value)}
           value={formData.telefon}
         />
@@ -91,6 +95,7 @@ export default function PersonalForm({ formData, updateFormData }) {
         onFileSelect={(file) => updateFormData("photoFile", file)}
         acceptedTypes="image/*,application/pdf"
         maxSize={5 * 1024 * 1024}
+        coverLetter={false}
         value={formData.photoFile}
       />
       <h3 className={classes.h3red}>Interesi për punë</h3>
@@ -112,6 +117,7 @@ export default function PersonalForm({ formData, updateFormData }) {
         value={formData.mundësiaPunë}
         onChange={(e) => updateFormData("mundësiaPunë", e.target.value)}
         topLabel="Mundësia për punë"
+        isInsideInput={true}
       />
     </div>
   );
