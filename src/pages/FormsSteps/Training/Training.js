@@ -68,16 +68,18 @@ export default function Training({
                 }
               />
               <img alt="arrow" className={classes.dateArrow} src={arrow} />
-              <DateInputDemo
-                topLabel="Periudha e mbarimit"
-                value={entry.endDate}
+              <CustomTextInput
+                value={entry.duration}
+                label="Kohëzgjatja"
+                name="duration"
+                topLabel="Kohëzgjatja"
                 onChange={(e) =>
-                  updateTrainingEntry(index, "endDate", e.target.value)
+                  updateTrainingEntry(index, "duration", e.target.value)
                 }
               />
             </div>
 
-            {index === 0 && training.length > 1 && (
+            {training.length > 1 && (
               <button
                 className={classes.deleteBtnBottom}
                 onClick={() => removeTrainingEntry(entry.id)}
@@ -88,8 +90,6 @@ export default function Training({
           </div>
         </div>
       ))}
-
-      {training.length < 3 && (
         <button
           className={classes.applyBtnBottom}
           style={{ marginTop: "24px" }}
@@ -97,7 +97,6 @@ export default function Training({
         >
           + Shto trajnim
         </button>
-      )}
     </>
   );
 }

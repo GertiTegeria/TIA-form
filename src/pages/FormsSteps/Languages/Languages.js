@@ -25,7 +25,9 @@ export default function Language({
                 label="Shëno gjuhën"
                 name="Gjuha"
                 topLabel="Gjuha"
-                onChange={(e) => updateLanguageEntry(index, "language", e.target.value)}
+                onChange={(e) =>
+                  updateLanguageEntry(index, "language", e.target.value)
+                }
               />
 
               <CustomSelecter
@@ -39,7 +41,7 @@ export default function Language({
               />
             </div>
 
-            {index === 0 && languages.length > 1 && (
+            {languages.length > 1 && (
               <button
                 className={classes.deleteBtnBottom}
                 onClick={() => removeLanguageEntry(entry.id)}
@@ -51,15 +53,13 @@ export default function Language({
         </div>
       ))}
 
-      {languages.length < 3 && (
-        <button
-          className={classes.applyBtnBottom}
-          style={{ marginTop: "24px" }}
-          onClick={addLanguageEntry}
-        >
-          + Shto gjuhe
-        </button>
-      )}
+      <button
+        className={classes.applyBtnBottom}
+        style={{ marginTop: "24px" }}
+        onClick={addLanguageEntry}
+      >
+        + Shto gjuhe
+      </button>
     </>
   );
 }

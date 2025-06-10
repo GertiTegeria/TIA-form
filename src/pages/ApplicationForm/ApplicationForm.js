@@ -302,7 +302,7 @@ function ApplicationForm() {
             />
           )}
           {activeStep === 8 && (
-            <FinishedAplication onBack={handleBack} onSubmit={handleSubmit} />
+            <FinishedAplication computerPrograms={formData.computerPrograms} formData={formData} updateFormData={updateFormData}  onBack={handleBack} onSubmit={handleSubmit} />
           )}
         </div>
         {/* {activeStep === 0 && 8 ? '' :<div className={classes.divider}></div>} */}

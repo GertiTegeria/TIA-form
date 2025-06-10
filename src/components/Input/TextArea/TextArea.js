@@ -7,7 +7,7 @@ const CoverLetterTextarea = ({
   value,
   onChange,
   onBlur,
-  label = "PËRSE DËSHIRONI TË PUNONI PËR tia-N? ",
+  label = "Përse deshironi të punoni për TIA-N? ",
   placeholder,
   disabled = false,
   rows = 8,

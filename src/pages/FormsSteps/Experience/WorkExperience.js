@@ -108,7 +108,7 @@ export default function WorkExperience({
               }
             />
 
-            {index === 0 && workExperience.length > 1 && (
+            {workExperience.length > 1 && (
               <button
                 className={classes.deleteBtnBottom}
                 onClick={() => removeWorkExperienceEntry(entry.id)}
@@ -119,8 +119,6 @@ export default function WorkExperience({
           </div>
         </div>
       ))}
-
-      {workExperience.length < 3 && (
         <button
           className={classes.applyBtnBottom}
           style={{ marginTop: "24px" }}
@@ -128,7 +126,6 @@ export default function WorkExperience({
         >
           + Shto eksperiencë
         </button>
-      )}
     </>
   );
 }

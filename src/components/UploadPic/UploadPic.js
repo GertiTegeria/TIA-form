@@ -68,6 +68,7 @@ const FileUpload = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              fontFamily: "Open Sans",
               gap: "8px",
             }}
             disabled={disabled}
@@ -103,6 +104,7 @@ const FileUpload = ({
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  fontFamily: "Open Sans",
                 }}
               >
                 {value.type === "application/pdf" ? "Coverletter.pdf" : "image.png"}

@@ -67,7 +67,7 @@ export default function EducationForm({ education, updateEducationEntry, addEduc
               />
             </div>
 
-            {index === 0 && education.length > 1 && (
+            {education.length > 1 && (
               <button
                 className={classes.applyBtnBottom}
                 onClick={() => removeEducationEntry(entry.id)}
@@ -78,8 +78,6 @@ export default function EducationForm({ education, updateEducationEntry, addEduc
           </div>
         </div>
       ))}
-
-      {education.length < 3 && (
         <button
           className={classes.applyBtnBottom}
           style={{ marginTop: "24px" }}
@@ -87,7 +85,6 @@ export default function EducationForm({ education, updateEducationEntry, addEduc
         >
           + Shto arsimin
         </button>
-      )}
     </>
   );
 }

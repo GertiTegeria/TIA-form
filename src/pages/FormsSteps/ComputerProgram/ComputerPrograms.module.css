@@ -1,8 +1,6 @@
 .container {
     width: 100%;
     max-width: 800px;
-    margin: 10px auto;
-    background-color: transparent;
   }
 
 
@@ -82,3 +80,10 @@
     font-size: 14px;
   }
   
+
+  @media (max-width: 480px) {
+    .programNameCell {
+      max-width: 90px;
+    }
+
+   }

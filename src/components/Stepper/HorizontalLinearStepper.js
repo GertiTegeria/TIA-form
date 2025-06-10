@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
-
 const CustomStepIcon = styled("div")(({ ownerState, theme }) => ({
   backgroundColor:
     ownerState.completed || ownerState.active ? "#DB0035" : "#EDEAEA",
@@ -31,15 +30,16 @@ const StepWrapper = styled("div")({
   flexDirection: "column",
   alignItems: "center",
   flex: 1,
-  minWidth: 0, 
+  minWidth: 0,
   "&:not(:last-child)::after": {
     content: '""',
     position: "absolute",
-    top: "18.5px", 
+    top: "18.5px",
     left: "50%",
     right: "-50%",
     height: 3,
     backgroundColor: "#EDEAEA",
+    fontWeight: 700,
     zIndex: 1,
   },
   "&.completed:not(:last-child)::after": {
@@ -70,13 +70,17 @@ export default function HorizontalLinearStepper({ activeStep, steps }) {
         {steps.map((label, index) => {
           const isActive = index === activeStep;
           const isCompleted = index < activeStep;
-          
+
           return (
             <StepWrapper
               key={label}
-              className={`${isActive ? "active" : ""} ${isCompleted ? "completed" : ""}`}
+              className={`${isActive ? "active" : ""} ${
+                isCompleted ? "completed" : ""
+              }`}
             >
-              <CustomStepIcon ownerState={{ completed: isCompleted, active: isActive }}>
+              <CustomStepIcon
+                ownerState={{ completed: isCompleted, active: isActive }}
+              >
                 {index + 1}
               </CustomStepIcon>
               <Box

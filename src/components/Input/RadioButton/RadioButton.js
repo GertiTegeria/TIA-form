@@ -26,9 +26,9 @@ const CustomRadioButton = ({
   
     radioContainer: {
       display: "flex",
-      gap: isFullWidth ? "0" : "24px",
+      gap: "24px",
       flexWrap: "wrap",
-      width: isFullWidth ? "100%" : "80%",
+      width: "100%",
     },
   
     radioOption: {
@@ -39,11 +39,10 @@ const CustomRadioButton = ({
       cursor: "pointer",
       transition: "all 0.2s ease",
       backgroundColor: "white",
-      minWidth: isInsideInput ? "120px" : isFullWidth ? "180px" : "60px",
-      flex: "1",
       height: "52px",
+      minWidth: isInsideInput ? "160px" : "",
       gap: "8px",
-      maxWidth: isInsideInput ? "120px" : isFullWidth ? "160px" : "60px",
+      maxWidth: "100%",
     },
   
     radioInput: {
@@ -65,7 +64,7 @@ const CustomRadioButton = ({
     },
   
     radioLabel: {
-      fontSize: "12px",
+      fontSize: "14px",
       color: "#1E1E1E",
       cursor: "pointer",
       userSelect: "none",
@@ -147,7 +146,6 @@ const CustomRadioButton = ({
           >
             <div
               style={{
-                position: "relative",
                 width: 24,
                 height: 24,
                 display: "flex",
