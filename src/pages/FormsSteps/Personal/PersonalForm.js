@@ -15,7 +15,7 @@ import CustomPhoneInput from "../../../components/Input/Phone/PhoneInput";
 import FileUpload from "../../../components/UploadPic/UploadPic";
 import { useState } from "react";
 
-export default function PersonalForm({ formData, updateFormData }) {
+export default function PersonalForm({ formData, updateFormData, updloadPhotoFile }) {
 
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -126,7 +126,10 @@ export default function PersonalForm({ formData, updateFormData }) {
         />
       </div>
       <FileUpload
-        onFileSelect={(file) => updateFormData("photoFile", file)}
+        onFileSelect={(file) => {
+    updateFormData("photoFile", file); // Optional: store locally
+    updloadPhotoFile(file);            // Upload to server
+  }}
         acceptedTypes="image/*"
         value={formData.photoFile}
       />

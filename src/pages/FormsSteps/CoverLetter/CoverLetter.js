@@ -1,8 +1,11 @@
-import React from "react";
 import CoverLetterTextarea from "../../../components/Input/TextArea/TextArea";
 import FileUpload from "../../../components/UploadPic/UploadPic";
 
-export default function CoverLetter({ formData, updateFormData, updloadCoverLetterasFile }) {
+export default function CoverLetter({
+  formData,
+  updateFormData,
+  updloadCoverLetterasFile,
+}) {
   return (
     <div>
       {formData.coverLetterFile ? (
@@ -18,18 +21,17 @@ export default function CoverLetter({ formData, updateFormData, updloadCoverLett
         />
       )}
       <FileUpload
-  onFileSelect={(file) => {
-    updateFormData("coverLetterFile", file);
-    if (file) {
-      updloadCoverLetterasFile(file);  
-    }
-  }}
-  acceptedTypes="application/pdf"
-  maxSize={5 * 1024 * 1024}
-  coverLetter={true}
-  value={formData.coverLetterFile}
-/>
- 
+        onFileSelect={(file) => {
+          updateFormData("coverLetterFile", file);
+          if (file) {
+            updloadCoverLetterasFile(file);
+          }
+        }}
+        acceptedTypes="application/pdf"
+        maxSize={5 * 1024 * 1024}
+        coverLetter={true}
+        value={formData.coverLetterFile}
+      />
     </div>
   );
 }

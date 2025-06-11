@@ -31,6 +31,7 @@ function ApplicationForm() {
     datePersonal: "",
     pozicioni: "",
     mundësiaPunë: "",
+     photoFile: null,
     education: [
       {
         institution: "",
@@ -72,7 +73,7 @@ function ApplicationForm() {
     additionalQuestions2: "",
     specifyRelationship: "",
     coverLetterLength: "",
-    coverLetterFile: "",
+    coverLetterFile: null,
   });
 
   const updateFormData = (field, value) => {
@@ -217,31 +218,69 @@ function ApplicationForm() {
   };
 
   function updloadCoverLetterasFile(file) {
- 
-    const headers = {
-      'Content-Type': 'application/octet-stream',
-      'X-File-Size': file.size.toString(),
-      'X-File-Type': file.type,
-      'X-File-Name': file.name,
-      'Content-Length': file.size.toString(),
-      'X-File-Offset': '0'
-    };
+  // console.log("Starting file upload:", file.name, file.size, file.type);
   
-    axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
-      headers: headers
+  const headers = {
+    'Content-Type': 'application/octet-stream',
+    'X-File-Size': file.size.toString(),
+    'X-File-Type': file.type,
+    'X-File-Name': file.name,
+    // 'Content-Length': file.size.toString(),
+    'X-File-Offset': '0'
+  };
+
+  console.log("Upload headers:", headers);
+
+  axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
+    headers: headers,
+  })
+    .then((response) => {
+      console.log("Response data getting id:", response.data.id);
+      
     })
-      .then((response) => {
-        console.log("Upload successful:", response.data);
-        updateFormData("coverLetterFile", response.data.filePath || response.data);
-      })
-      .catch((error) => {
-        console.error("Upload failed:", error);
-        if (error.response) {
-          console.error("Status:", error.response.status);
-          console.error("Response:", error.response.data);
-        }
+    .catch((error) => {
+      console.error("Upload failed:", error);
+      
+      if (error.response) {
+        console.error("Error status:", error.response.status);
+        console.error("Error headers:", error.response.headers);
+        console.error("Error data:", error.response.data);
+        
+      }
+      updateFormData("coverLetterFile", null);
+      alert("File upload failed. Please try again.");
+    });
+}
+
+
+
+function updloadPhotoFile(file) {
+  const headers = {
+    'Content-Type': 'application/octet-stream',
+    'X-File-Size': file.size.toString(),
+    'X-File-Type': file.type,
+    'X-File-Name': file.name,
+    'X-File-Offset': '0'
+  };
+
+  axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
+    headers: headers,
+  })
+    .then((response) => {
+      console.log("Upload successful, ID:", response.data.id, response.data.fileName, response.data.fileType, response.data.fileSize);
+      updateFormData("photoFile", {
+        id: response.data.id,
+        name: file.name,
+        type: file.type,
+        size: file.size,
       });
-  }
+    })
+    .catch((error) => {
+      console.error("Upload failed:", error);
+      updateFormData("photoFile", null);
+      alert("Image upload failed. Please try again.");
+    });
+}
 
 
   const removeLanguageEntry = () => {
@@ -252,9 +291,6 @@ function ApplicationForm() {
       }));
     }
   };
-
-
-  
 
   const handleSubmit = () => {
     // Add your form submission logic here
@@ -281,7 +317,7 @@ function ApplicationForm() {
         <h3 className={classes.h3red}>{steps[activeStep]}</h3>
         <div className={classes.formContent}>
           {activeStep === 0 && (
-            <PersonalForm formData={formData} updateFormData={updateFormData} />
+            <PersonalForm formData={formData} updateFormData={updateFormData} updloadPhotoFile={updloadPhotoFile} />
           )}
           {activeStep === 1 && (
             <EducationForm
