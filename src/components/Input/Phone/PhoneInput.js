@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import phoneIcon from "../../../assets/phone.png";
 
 const PhoneIcon = () => (
@@ -91,44 +90,8 @@ const CustomPhoneInput = ({
   error,
   helperText,
   disabled,
-  defaultCountryCode = "+355",
 }) => {
-  const [selectedCountryCode, setSelectedCountryCode] =
-    useState(defaultCountryCode);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-
-  const handlePhoneNumberChange = (e) => {
-    // Merr vlerën e inputit
-    let newPhoneNumber = e.target.value;
-
-    // Heq çdo gjë që nuk është numër (vetëm 0-9 lejohen)
-    newPhoneNumber = newPhoneNumber.replace(/\D/g, "");
-
-    // Kufizo deri në 9 shifra (për siguri)
-    if (newPhoneNumber.length > 10) {
-      newPhoneNumber = newPhoneNumber.slice(0, 10);
-    }
-
-
-
-    const fullNumber = selectedCountryCode + newPhoneNumber;
-    if (onChange) {
-      onChange({
-        target: {
-          name,
-          value: fullNumber,
-        },
-      });
-    }
-  };
-
-  const handleDropdownToggle = () => {
-    if (!disabled) {
-      setIsDropdownOpen(!isDropdownOpen);
-    }
-  };
-
   const inputContainerStyle = {
     ...styles.inputContainer,
     ...(disabled ? styles.inputContainerDisabled : {}),
@@ -152,8 +115,8 @@ const CustomPhoneInput = ({
       {topLabel && <label style={styles.topLabel}>{topLabel}</label>}
 
       <div style={inputContainerStyle}>
-        <div style={styles.countryCodeSection} onClick={handleDropdownToggle}>
-          <span style={styles.countryCode}>{selectedCountryCode}</span>
+        <div style={styles.countryCodeSection}>
+          <span style={styles.countryCode}>+355</span>
         </div>
 
         <input

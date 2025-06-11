@@ -30,7 +30,7 @@ const ComputerProgram = ({ computerPrograms, setComputerPrograms }) => {
             {programsList.map((program) => (
               <tr key={program} className={classes.row}>
                 <td className={classes.programNameCell}>{program}</td>
-                {["fillestar", "mesatar", "avancuar"].map((level) => (
+                {["Fillestar", "Mesatar", "Avancuar"].map((level) => (
                   <td key={level} className={classes.cell}>
                     <div className={classes.radioCell}>
                       <input

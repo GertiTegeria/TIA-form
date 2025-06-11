@@ -12,6 +12,7 @@ const classes = {
     marginBottom: '6px',
     fontSize: '14px',
     color: '#1E1E1E',
+    fontWeight: '700',
   },
 
   inputContainer: {
@@ -34,6 +35,7 @@ const classes = {
     color: '#1E1E1E',
     paddingRight: '32px',
     backgroundColor: 'transparent',
+    cursor: 'pointer',
   },
 
   icon: {
@@ -85,6 +87,7 @@ const CustomDateInput = ({
   error,
   helperText,
   disabled,
+  yearOnly = false
 }) => {
   const inputRef = useRef(null);
 
@@ -114,7 +117,7 @@ const CustomDateInput = ({
       <div style={getInputContainerStyle()}>
         <input
           ref={inputRef}
-          type="date"
+          type={yearOnly ? "number" : "date"}
           name={name}
           value={value}
           onChange={onChange}
@@ -122,7 +125,12 @@ const CustomDateInput = ({
           placeholder={placeholder}
           disabled={disabled}
           style={classes.input}
+          onClick={handleIconClick}
           autoComplete="off"
+          min="1900"
+          max={new Date().getFullYear()}
+          step="1"
+          {...(yearOnly && { pattern: "\\d{4}" })}
         />
         <span style={classes.icon} onClick={handleIconClick}>
           <img src={calendarIcon} alt="calendar icon"/>
@@ -134,7 +142,7 @@ const CustomDateInput = ({
   );
 };
 
-const DateInputDemo = ({onChange, value, topLabel}) => {
+const DateInputDemo = ({onChange, value, topLabel, yearOnly}) => {
   // const [dateValue, setDateValue] = React.useState('');
   // const [errorState, setErrorState] = React.useState(false);
 
@@ -156,7 +164,8 @@ const DateInputDemo = ({onChange, value, topLabel}) => {
       topLabel={topLabel}
       value={value}
       onChange={onChange}
-      placeholder="dd/mm/yyyy"
+      placeholder={yearOnly ? "yyyy" : "dd/mm/yyyy"}
+      yearOnly={yearOnly}
       // error={errorState}
       // helperText={errorState ? "Data nuk mund të jetë në të ardhmen." : ""}
     />

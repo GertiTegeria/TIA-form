@@ -2,7 +2,6 @@ import CustomTextInput from "../../../components/Input/Text/TextInput";
 import classes from "./Training.module.css";
 import DateInputDemo from "../../../components/Input/Date/Date";
 import locationIcon from "../../../assets/location.png";
-import arrow from "../../../assets/dateArrow.png";
 
 export default function Training({
   training,
@@ -59,15 +58,15 @@ export default function Training({
               />
             </div>
 
-            <div className={classes.dateGroup}>
+            <div className={classes.firstGroup}>
               <DateInputDemo
                 topLabel="Viti"
                 value={entry.year}
+                yearOnly={true}
                 onChange={(e) =>
                   updateTrainingEntry(index, "year", e.target.value)
                 }
               />
-              <img alt="arrow" className={classes.dateArrow} src={arrow} />
               <CustomTextInput
                 value={entry.duration}
                 label="Kohëzgjatja"

@@ -14,6 +14,7 @@ import Language from "../FormsSteps/Languages/Languages";
 import ExtraQuestion from "../FormsSteps/ExtraQuestion/ExtraQuestion";
 import ComputerProgram from "../FormsSteps/ComputerProgram/ComputerProgram";
 import CoverLetter from "../FormsSteps/CoverLetter/CoverLetter";
+import axios from "axios";
 
 function ApplicationForm() {
   const [activeStep, setActiveStep] = useState(0);
@@ -215,6 +216,34 @@ function ApplicationForm() {
     }));
   };
 
+  function updloadCoverLetterasFile(file) {
+ 
+    const headers = {
+      'Content-Type': 'application/octet-stream',
+      'X-File-Size': file.size.toString(),
+      'X-File-Type': file.type,
+      'X-File-Name': file.name,
+      'Content-Length': file.size.toString(),
+      'X-File-Offset': '0'
+    };
+  
+    axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
+      headers: headers
+    })
+      .then((response) => {
+        console.log("Upload successful:", response.data);
+        updateFormData("coverLetterFile", response.data.filePath || response.data);
+      })
+      .catch((error) => {
+        console.error("Upload failed:", error);
+        if (error.response) {
+          console.error("Status:", error.response.status);
+          console.error("Response:", error.response.data);
+        }
+      });
+  }
+
+
   const removeLanguageEntry = () => {
     if (formData.foreignLanguages.length > 1) {
       setFormData((prev) => ({
@@ -223,6 +252,9 @@ function ApplicationForm() {
       }));
     }
   };
+
+
+  
 
   const handleSubmit = () => {
     // Add your form submission logic here
@@ -293,7 +325,7 @@ function ApplicationForm() {
             />
           )}
           {activeStep === 6 && (
-            <CoverLetter formData={formData} updateFormData={updateFormData} />
+            <CoverLetter formData={formData} updateFormData={updateFormData} updloadCoverLetterasFile={updloadCoverLetterasFile} />
           )}
           {activeStep === 7 && (
             <ExtraQuestion
@@ -302,10 +334,15 @@ function ApplicationForm() {
             />
           )}
           {activeStep === 8 && (
-            <FinishedAplication computerPrograms={formData.computerPrograms} formData={formData} updateFormData={updateFormData}  onBack={handleBack} onSubmit={handleSubmit} />
+            <FinishedAplication
+              computerPrograms={formData.computerPrograms}
+              formData={formData}
+              updateFormData={updateFormData}
+              onBack={handleBack}
+              onSubmit={handleSubmit}
+            />
           )}
         </div>
-        {/* {activeStep === 0 && 8 ? '' :<div className={classes.divider}></div>} */}
         {activeStep < 8 && (
           <>
             <div className={classes.divider}></div>

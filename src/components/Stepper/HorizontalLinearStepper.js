@@ -98,6 +98,7 @@ export default function HorizontalLinearStepper({ activeStep, steps }) {
                     lineHeight: { xs: "12px", sm: "14px", md: "16px" },
                     color: isActive ? "#DB0035" : "#000000",
                     wordBreak: "break-word",
+                    fontWeight: isActive ? 700 : 400,
                     hyphens: "auto",
                     display: "block",
                   }}

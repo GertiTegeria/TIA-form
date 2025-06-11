@@ -13,8 +13,35 @@ import {
 import DateInputDemo from "../../../components/Input/Date/Date";
 import CustomPhoneInput from "../../../components/Input/Phone/PhoneInput";
 import FileUpload from "../../../components/UploadPic/UploadPic";
+import { useState } from "react";
 
 export default function PersonalForm({ formData, updateFormData }) {
+
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const validateEmail = (email) => {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setEmailError(isValid ? "" : "Emaili duhet të përmbajë simbolin '@'");
+    return isValid;
+  };
+
+
+  const handlePhoneChange = (e) => {
+    let phoneValue = e.target.value;
+
+    // Heq çdo gjë që nuk është numër (vetëm 0-9)
+    const onlyNumbers = phoneValue.replace(/\D/g, "");
+
+    // Kontrollo nëse ka më pak se 9 shifra (ose kriterin që dëshiron)
+    if (onlyNumbers.length < 9) {
+      setPhoneError("Numri i telefonit duhet të ketë të paktën 9 shifra");
+    } else {
+      setPhoneError("");
+    }
+
+    updateFormData("telefon", phoneValue);
+  };
+
   return (
     <div className={classes.personalForm}>
       <div className={classes.firstGroup}>
@@ -74,29 +101,36 @@ export default function PersonalForm({ formData, updateFormData }) {
         />
       </div>
       <div className={classes.firstGroup}>
-        <CustomPhoneInput
+      <CustomPhoneInput
           topLabel="Telefon / Celular"
           name="telefon"
-          onChange={(e) => updateFormData("telefon", e.target.value)}
+          onChange={handlePhoneChange}
           value={formData.telefon}
+          error={!!phoneError}
+          helperText={phoneError}
         />
         <CustomTextInput
           name="name"
           label="E-mail"
           topLabel="E-mail"
           value={formData.email}
-          onChange={(e) => updateFormData("email", e.target.value)}
+          onChange={(e) => {
+            const newEmail = e.target.value;
+            updateFormData("email", newEmail);
+            validateEmail(newEmail);
+          }}
           icon={<img src={emailIcon} alt="email" />}
           iconPosition="end"
+          error={!!emailError}
+          helperText={emailError}
         />
       </div>
       <FileUpload
         onFileSelect={(file) => updateFormData("photoFile", file)}
-        acceptedTypes="image/*,application/pdf"
-        maxSize={5 * 1024 * 1024}
-        coverLetter={false}
+        acceptedTypes="image/*"
         value={formData.photoFile}
       />
+
       <h3 className={classes.h3red}>Interesi për punë</h3>
       <div className={classes.firstGroup}>
         <div style={{ flex: 1 }}>

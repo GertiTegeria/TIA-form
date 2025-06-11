@@ -22,6 +22,7 @@ const CustomRadioButton = ({
       marginBottom: "8px",
       fontSize: "14px",
       color: "#1E1E1E",
+      fontWeight: "700",
     },
   
     radioContainer: {

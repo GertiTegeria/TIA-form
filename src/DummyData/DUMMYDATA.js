@@ -63,10 +63,10 @@ export const steps = [
   ];
 
   export const languageLevels = [
-    { label: "Fillestar", value: "beginner" },
-    { label: "Mesatar", value: "intermediate" },
-    { label: "Avancuar", value: "advanced" },
-    { label: "Shkëlqyeshëm", value: "fluent" },
+    { label: "Fillestar", value: "Fillestar" },
+    { label: "Mesatar", value: "Mesatar" },
+    { label: "Avancuar", value: "Avancuar" },
+    { label: "Shkëlqyeshëm", value: "Shkëlqyeshëm" },
   ];
   
 
