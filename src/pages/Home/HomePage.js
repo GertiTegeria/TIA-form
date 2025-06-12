@@ -48,7 +48,12 @@ const HomePage = () => {
           <div className={styles.jobListings}>
             {jobsPositions.map((job) => (
               <div
-                onClick={() => window.open("/JobDetails", "_blank")}
+              onClick={() => {
+                const jobTitle = job.jobTitle;
+                const url = `/JobDetails?jobTitle=${encodeURIComponent(jobTitle)}`;
+                window.open(url, "_blank");
+              }}
+            
                 key={job.id}
                 className={styles.jobItem}
               >

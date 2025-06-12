@@ -15,8 +15,11 @@ import CustomPhoneInput from "../../../components/Input/Phone/PhoneInput";
 import FileUpload from "../../../components/UploadPic/UploadPic";
 import { useState } from "react";
 
-export default function PersonalForm({ formData, updateFormData, updloadPhotoFile }) {
-
+export default function PersonalForm({
+  formData,
+  updateFormData,
+  updloadPhotoFile,
+}) {
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const validateEmail = (email) => {
@@ -25,14 +28,11 @@ export default function PersonalForm({ formData, updateFormData, updloadPhotoFil
     return isValid;
   };
 
-
   const handlePhoneChange = (e) => {
     let phoneValue = e.target.value;
 
-    // Heq çdo gjë që nuk është numër (vetëm 0-9)
     const onlyNumbers = phoneValue.replace(/\D/g, "");
 
-    // Kontrollo nëse ka më pak se 9 shifra (ose kriterin që dëshiron)
     if (onlyNumbers.length < 9) {
       setPhoneError("Numri i telefonit duhet të ketë të paktën 9 shifra");
     } else {
@@ -101,7 +101,7 @@ export default function PersonalForm({ formData, updateFormData, updloadPhotoFil
         />
       </div>
       <div className={classes.firstGroup}>
-      <CustomPhoneInput
+        <CustomPhoneInput
           topLabel="Telefon / Celular"
           name="telefon"
           onChange={handlePhoneChange}
@@ -127,9 +127,9 @@ export default function PersonalForm({ formData, updateFormData, updloadPhotoFil
       </div>
       <FileUpload
         onFileSelect={(file) => {
-    updateFormData("photoFile", file); // Optional: store locally
-    updloadPhotoFile(file);            // Upload to server
-  }}
+          updateFormData("photoFile", file);
+          updloadPhotoFile(file);
+        }}
         acceptedTypes="image/*"
         value={formData.photoFile}
       />
@@ -138,11 +138,9 @@ export default function PersonalForm({ formData, updateFormData, updloadPhotoFil
       <div className={classes.firstGroup}>
         <div style={{ flex: 1 }}>
           <CustomTextInput
-            name="name"
-            topLabel="Pozicioni për të cilin aplikoj: "
-            iconPosition="end"
-            value={formData.interesiPërPunë}
-            onChange={(e) => updateFormData("interesiPërPunë", e.target.value)}
+            name="pozicioni"
+            topLabel="Pozicioni për të cilin aplikoj:"
+            value={formData.pozicioni}
           />
         </div>
         <div style={{ flex: 1 }} />

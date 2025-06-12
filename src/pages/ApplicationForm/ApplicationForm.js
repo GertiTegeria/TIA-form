@@ -15,9 +15,13 @@ import ExtraQuestion from "../FormsSteps/ExtraQuestion/ExtraQuestion";
 import ComputerProgram from "../FormsSteps/ComputerProgram/ComputerProgram";
 import CoverLetter from "../FormsSteps/CoverLetter/CoverLetter";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function ApplicationForm() {
   const [activeStep, setActiveStep] = useState(0);
+
+  const location = useLocation();
+  const jobTitle = location.state?.jobTitle;
 
   const [formData, setFormData] = useState({
     emriMbiemri: "",
@@ -29,7 +33,7 @@ function ApplicationForm() {
     telefon: "",
     email: "",
     datePersonal: "",
-    pozicioni: "",
+    pozicioni: jobTitle,
     mundësiaPunë: "",
      photoFile: null,
     education: [
@@ -217,38 +221,53 @@ function ApplicationForm() {
     }));
   };
 
-  function updloadCoverLetterasFile(file) {
-  // console.log("Starting file upload:", file.name, file.size, file.type);
+ function updloadCoverLetterasFile(file) {
+  console.log("Starting file upload:", file.name, file.size, file.type);
   
   const headers = {
     'Content-Type': 'application/octet-stream',
     'X-File-Size': file.size.toString(),
     'X-File-Type': file.type,
     'X-File-Name': file.name,
-    // 'Content-Length': file.size.toString(),
     'X-File-Offset': '0'
   };
 
   console.log("Upload headers:", headers);
 
-  axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
+  return axios.post("https://tia.digitalapps0.com/ws/files/upload", file, {
     headers: headers,
   })
     .then((response) => {
-      console.log("Response data getting id:", response.data.id);
+      console.log("Full response:", response);
+      console.log("Response status:", response.status);
+      console.log("Response data:", response.data);
       
+      if (response.data && response.data.id) {
+        updateFormData("coverLetterFile", {
+          id: response.data.id,
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        });
+        console.log("File uploaded successfully with ID:", response.data.id);
+      } else {
+        console.error("No ID in response:", response.data);
+      }
+      
+      return response.data;
     })
     .catch((error) => {
       console.error("Upload failed:", error);
+      console.error("Error details:", {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        headers: error.response?.headers
+      });
       
-      if (error.response) {
-        console.error("Error status:", error.response.status);
-        console.error("Error headers:", error.response.headers);
-        console.error("Error data:", error.response.data);
-        
-      }
       updateFormData("coverLetterFile", null);
       alert("File upload failed. Please try again.");
+      throw error;
     });
 }
 
@@ -292,12 +311,133 @@ function updloadPhotoFile(file) {
     }
   };
 
-  const handleSubmit = () => {
-    // Add your form submission logic here
-    console.log("Application submitted!");
-    // You can add API call, navigation, or other submission logic here
-    alert("Application submitted successfully!");
+  const programNameToId = {
+    "Microsoft Word": 1,
+    "Microsoft Excel": 2,
+    "Microsoft Access": 3,
+    "Power Point": 4,
+    "Te tjera": 5
   };
+
+  const createApplication = async () => {
+    try {
+      
+      let resumeId = null;
+      let photoId = null;
+  
+      if (formData.photoFile && formData.photoFile.id) {
+        photoId = formData.photoFile.id;
+      }
+  
+      if (formData.coverLetterFile && formData.coverLetterFile.id) {
+        resumeId = formData.coverLetterFile.id;
+      }
+  
+      const computerProgramsList = Object.keys(formData.computerPrograms)
+        .filter((key) => formData.computerPrograms[key])
+        .map((key) => ({
+          computerProgram: programNameToId[key], 
+          proficiencyLevel: formData.computerPrograms[key],
+        }));
+
+
+      const applicationData = {
+        data: {
+          fullName: formData.emriMbiemri,
+          birthDate: formData.datePersonal,
+          birthPlace: formData.vendlindjaPersonal,
+          gender: parseInt(formData.gjinia) || 1, 
+          maritalStatus: parseInt(formData.statusiCivil) || 1,
+          address: formData.adresaPersonal,
+          mobilePhone: formData.telefon,
+          // test: 'test',
+          jobPosition: {
+            id: parseInt(formData.pozicioni) || 1 
+          },
+          availabilityToWork: parseInt(formData.mundësiaPunë) || 1,
+          email: formData.email,
+          
+          educationList: formData.education.map(edu => ({
+            name: edu.diploma,
+            institution: edu.institution,
+            startDate: edu.startDate,
+            endDate: edu.endDate
+          })),
+          
+          professionalTrainingList: formData.training.map(training => ({
+            institution: training.instituti,
+            year: training.year,
+            duration: training.duration
+          })),
+          
+          computerProgramsList,
+          
+          foreignLanguagesList: formData.foreignLanguages.map(lang => ({
+            language: lang.language,
+            proficiencyLevel: lang.level
+          })),
+          
+          employmentHistoryList: formData.workExperience.map(exp => ({
+            company: exp.company,
+            position: exp.position,
+            startDate: exp.startDate,
+            endDate: exp.endDate
+          })),
+          
+          coverLetter: formData.coverLetter,
+          creationDate: new Date().toISOString().split('T')[0], 
+          isInternal: false,
+          status: 1,
+          
+          ...(resumeId && { resume: { id: resumeId } }),
+          ...(photoId && { photo: { id: photoId } })
+        }
+      };
+  
+      console.log("Sending application data:", applicationData);
+  
+      const response = await axios.post(
+        "https://tia.digitalapps0.com/ws/rest/com.axelor.apps.talent.db.JobApplication",
+        applicationData,
+        {
+          headers: {
+            
+          }
+        }
+      );
+  
+      console.log("Application created successfully:", response.data);
+      return response.data;
+  
+    } catch (error) {
+      console.error("Error creating application:", error);
+      
+      if (error.response) {
+        console.error("Error status:", error.response.status);
+        console.error("Error data:", error.response.data);
+      }
+      
+      throw error;
+    }
+  };
+  
+
+  const handleSubmit = async () => {
+    try {
+      console.log("Submitting application...");
+  
+      const result = await createApplication();
+      
+      console.log("Application submitted successfully!", result);
+      alert("Application submitted successfully!");
+      
+    } catch (error) {
+      console.error("Submission failed:", error);
+      alert("Failed to submit application. Please try again.");
+    }
+  };
+  
+
 
   return (
     <div className={classes.container}>

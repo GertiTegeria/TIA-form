@@ -2,10 +2,16 @@ import React from "react";
 import styles from "./JobDetails.module.css";
 import logo from "../../assets/logo.png";
 import chevron from "../../assets/chevron-down.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const JobDetails = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+
+  const queryParams = new URLSearchParams(location.search);
+  const jobTitle = queryParams.get("jobTitle");
+
   return (
     <div className={styles.container}>
       <div className={styles.subContainer}>
@@ -22,10 +28,10 @@ const JobDetails = () => {
               <span className={styles.breadcrumbText}>Jobs & Career</span>
             </div>
             <div className={styles.titleSection}>
-              <h1 className={styles.jobTitle}>Receptionist</h1>
+              <h1 className={styles.jobTitle}>{jobTitle}</h1>
               <button
                 className={styles.applyBtnBottom}
-                onClick={() => navigate("/ApplicationForm")}
+                onClick={() => navigate("/ApplicationForm", {state: {jobTitle}})}
               >
                 Apliko
                 <img src={chevron} alt="chevron" className={styles.chevron} />

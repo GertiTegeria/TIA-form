@@ -84,10 +84,10 @@ export const steps = [
 
 
   export const computerPrograms = [
-    'Microsoft Word',
-    'Microsoft Excel', 
-    'Microsoft Access',
-    'Power Point',
-    'Te tjera'
+    "Microsoft Word", 
+    "Microsoft Excel",
+    "Microsoft Access",
+    "Power Point",
+    "Te tjera"
   ];
     

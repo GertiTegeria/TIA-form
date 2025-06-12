@@ -4,11 +4,15 @@ import classes from "./ComputerPrograms.module.css";
 
 const ComputerProgram = ({ computerPrograms, setComputerPrograms }) => {
   const handleSkillChange = (program, level) => {
-    setComputerPrograms({
+    const newState = {
       ...computerPrograms,
       [program]: level.target.value
-    });
+    };
+    
+    console.log("Updated computerPrograms state:", newState);
+    setComputerPrograms(newState);
   };
+  
 
   return (
     <>
